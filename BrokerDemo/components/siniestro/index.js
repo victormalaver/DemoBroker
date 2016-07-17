@@ -202,14 +202,16 @@ app.siniestro = kendo.observable({
                 latitud: '',
                 tipo: '',
             });
+            $("#formAddSiniestro").css("display","none");
+            $("#map").css("display","block");
             //mapa
             var alto = $(window).height() - $("#siniestroModelAddItemView .km-header").height();
             $("#map").css("height", alto + "px");
             if (miLatLong.length > 0) {
-                var map = L.map('map').setView(miLatLong, 13);
+                var map = L.map('map').setView(miLatLong, 18);
             } else {
                 miLatLong = [parseFloat(-12.0553016), parseFloat(-77.062695)];
-                var map = L.map('map').setView(miLatLong, 13);
+                var map = L.map('map').setView(miLatLong, 18);
             }
 
             L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -230,7 +232,8 @@ app.siniestro = kendo.observable({
 
         },
         setLatLong: function (e) {
-            
+            $("#map").css("display","none");
+            $("#formAddSiniestro").css("display","block");
         },
         onSaveClick: function (e) {
             var addFormData = this.get('addFormData'),

@@ -9,10 +9,10 @@
     <!-- START_CUSTOM_CODE_siniestroModel -->
     <!-- END_CUSTOM_CODE_siniestroModel -->
     <div id="editableListForm2" class="form-view">
-        <a data-role="button" data-bind="events: { click: setLatLong }">Reportar Siniestro</a>
         <div id="map">
         </div>
-        <form>
+        <a data-role="button" data-bind="events: { click: setLatLong }">Reportar Siniestro</a>
+        <form id="formAddSiniestro">
             <ul class="form-content" data-role="listview" data-style="inset">
                 <li class="form-content-item">
                     <label class="km-label-above">
@@ -36,7 +36,7 @@
                         <input id="longitud" data-bind="value: addFormData.longitud" placeholder="Longitud" type="text">
                     </label>
                 </li>
-                <li class="form-content-item">
+                <li>
                     <a data-role="button" data-align="right" data-bind="events: { click: onSaveClick }">Save</a>
                 </li>
             </ul>

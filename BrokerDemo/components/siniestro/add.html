@@ -11,7 +11,7 @@
     <div id="editableListForm2" class="form-view">
         <div id="divmap"></div>
         <div id="map"></div>
-        <a id="setLatLong" data-role="button" data-bind="events: { click: setLatLong }">Reportar Siniestro</a>
+        <a id="setLatLong" style="position: absolute;z-index: 9999999;bottom: 0px;" data-role="button" data-bind="events: { click: setLatLong }">Reportar Siniestro</a>
         <form id="formAddSiniestro">
             <ul class="form-content" data-role="listview" data-style="inset">
                 <li class="form-content-item">
@@ -45,9 +45,7 @@
                 </li>
                 </br>
                 </br>
-                <li>
-                    <a data-role="button" data-align="right" data-bind="events: { click: onSaveClick }">Save</a>
-                </li>
+                    <a data-role="button" data-align="right" data-bind="events: { click: onSaveClick }">Confirmar Reporte</a>
             </ul>
         </form>
         <!-- START_CUSTOM_CODE_editableListForm2 -->

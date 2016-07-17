@@ -209,7 +209,7 @@ app.siniestro = kendo.observable({
             $("#map").remove();
             var divmap = "<div id='map'></div>" 
             $("#divmap").after(divmap);
-            var alto = $(window).height() - $("#siniestroModelAddItemView .km-header").height();
+            var alto = $(window).height() - $("#siniestroModelAddItemView .km-header").height() - $("#setLatLong").height();
             $("#map").css("height", alto + "px");
             
             if (miLatLong.length > 0) {

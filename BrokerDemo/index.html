@@ -19,6 +19,9 @@
 </head>
 
 <body id="kendoUiMobileApp">
+    <script src="components/aseguradora/index.js"></script>
+    <script src="components/brooker/index.js"></script>
+    <script src="components/vehiculo/index.js"></script>
     <script src="components/siniestro/index.js"></script>
     <script src="components/home/index.js"></script>
     <div data-role="layout" data-id="main">
@@ -36,7 +39,7 @@
             </div>
         </header>
     </div>
-    <div id="appDrawer" data-role="drawer" data-title="Navigation">
+    <div id="appDrawer" data-role="drawer" data-title="Navigation" data-swipe-to-open-views='["siniestroView","siniestroModelDetailsView","vehiculoView"]'>
         <header data-role="header">
             <div data-role="navbar">
                 <span data-role="view-title"></span>
@@ -44,6 +47,7 @@
         </header>
         <ul id="navigation-container" data-role="listview">
             <li><a href="components/home/view.html" data-icon="home">Home</a></li>
+            <li><a href="components/vehiculo/view.html" data-icon="globe">Mis Seguros</a></li>
             <li><a href="components/siniestro/add.html" data-icon="globe">Reportar Siniestro</a></li>
             <li><a href="components/siniestro/view.html" data-icon="globe">Mis Siniestros</a></li>
             <li id="homeModellogout"><a href="components/home/view.html?logout=true" data-position="end" data-icon="action">Salir</a></li>

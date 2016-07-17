@@ -1,18 +1,18 @@
 'use strict';
 
-app.siniestro = kendo.observable({
+app.vehiculo = kendo.observable({
     onShow: function () {},
     afterShow: function () {}
 });
 
-// START_CUSTOM_CODE_siniestro
+// START_CUSTOM_CODE_vehiculo
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
 
-// END_CUSTOM_CODE_siniestro
+// END_CUSTOM_CODE_vehiculo
 (function (parent) {
     var dataProvider = app.data.brokerDemo,
         fetchFilteredData = function (paramFilter, searchFilter) {
-            var model = parent.get('siniestroModel'),
+            var model = parent.get('vehiculoModel'),
                 dataSource = model.get('dataSource');
 
             if (paramFilter) {
@@ -72,7 +72,7 @@ app.siniestro = kendo.observable({
         dataSourceOptions = {
             type: 'everlive',
             transport: {
-                typeName: 'siniestro',
+                typeName: 'vehiculo',
                 dataProvider: dataProvider
             },
             change: function (e) {
@@ -92,8 +92,12 @@ app.siniestro = kendo.observable({
             schema: {
                 model: {
                     fields: {
-                        'tipo': {
-                            field: 'tipo',
+                        'placa': {
+                            field: 'placa',
+                            defaultValue: ''
+                        },
+                        'modelo': {
+                            field: 'modelo',
                             defaultValue: ''
                         },
                     }
@@ -102,7 +106,7 @@ app.siniestro = kendo.observable({
             serverFiltering: true,
         },
         dataSource = new kendo.data.DataSource(dataSourceOptions),
-        siniestroModel = kendo.observable({
+        vehiculoModel = kendo.observable({
             dataSource: dataSource,
             fixHierarchicalData: function (data) {
                 var result = {},
@@ -152,29 +156,29 @@ app.siniestro = kendo.observable({
                 return result;
             },
             itemClick: function (e) {
-                var dataItem = e.dataItem || siniestroModel.originalItem;
+                var dataItem = e.dataItem || vehiculoModel.originalItem;
 
-                app.mobileApp.navigate('#components/siniestro/details.html?uid=' + dataItem.uid);
+                app.mobileApp.navigate('#components/vehiculo/details.html?uid=' + dataItem.uid);
 
             },
             addClick: function () {
-                app.mobileApp.navigate('#components/siniestro/add.html');
+                app.mobileApp.navigate('#components/vehiculo/add.html');
             },
             detailsShow: function (e) {
-                siniestroModel.setCurrentItemByUid(e.view.params.uid);
+                vehiculoModel.setCurrentItemByUid(e.view.params.uid);
             },
             setCurrentItemByUid: function (uid) {
                 var item = uid,
-                    dataSource = siniestroModel.get('dataSource'),
+                    dataSource = vehiculoModel.get('dataSource'),
                     itemModel = dataSource.getByUid(item);
 
-                if (!itemModel.tipo) {
-                    itemModel.tipo = String.fromCharCode(160);
+                if (!itemModel.placa) {
+                    itemModel.placa = String.fromCharCode(160);
                 }
 
-                siniestroModel.set('originalItem', itemModel);
-                siniestroModel.set('currentItem',
-                    siniestroModel.fixHierarchicalData(itemModel));
+                vehiculoModel.set('originalItem', itemModel);
+                vehiculoModel.set('currentItem',
+                    vehiculoModel.fixHierarchicalData(itemModel));
 
                 return itemModel;
             },
@@ -198,82 +202,44 @@ app.siniestro = kendo.observable({
         onShow: function (e) {
             // Reset the form data.
             this.set('addFormData', {
-                longitud: '',
-                latitud: '',
-                tipo: '',
+                brookerAdd: '',
+                aseguradoraAdd: '',
+                modelo: '',
+                placa: '',
             });
 
-            $("#formAddSiniestro").css("display", "none");
-            $("#setLatLong").css("display", "block");
-            $("#map").css("display", "block");
-            $("select#tipo")[0].selectedIndex = 0;
-            //mapa
-            $("#map").remove();
-            var divmap = "<div id='map'></div>"
-            $("#divmap").after(divmap);
-            var alto = $(window).height() - $("#siniestroModelAddItemView .km-header").height() - $("#setLatLong").height();
-            $("#map").css("height", alto + "px");
-
-            if (miLatLong.length > 0) {
-                var map = L.map('map').setView(miLatLong, 18);
-            } else {
-                miLatLong = [parseFloat(-12.0553016), parseFloat(-77.062695)];
-                var map = L.map('map').setView(miLatLong, 18);
-            }
-
-            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-
-            var marker = L.marker(miLatLong, {
-                    draggable: 'true'
-                }).addTo(map)
-                .bindPopup('Mi ubicación<br> Arrastre la marca.')
-                .openPopup();
-            marker.on("dragend", function (ev) {
-                var chagedPos = ev.target.getLatLng();
-                this.bindPopup(chagedPos.toString()).openPopup();
-                
-                var latlong = chagedPos.toString().replace("LatLng(","").replace(")","");
-                var miLatitud = latlong.substring(0, latlong.indexOf(","));
-                var miLongitud = latlong.substring(latlong.indexOf(",") + 1, latlong.length);
-                $("#latitud").val(miLatitud);
-                $("#longitud").val(miLongitud);
-            });
-
-            //cargamos ds vehiculo 
-            var dsVehiculo = app.vehiculo.vehiculoModel.dataSource;
-            dsVehiculo.fetch(function () {
+            //cargamos ds aseguradora 
+            var dsAseguradora = app.aseguradora.aseguradoraModel.dataSource;
+            dsAseguradora.fetch(function () {
                 var html = [];
-                var data = dsVehiculo.data();
+                var data = dsAseguradora.data();
                 for (var i = 0; i < data.length; i++) {
-                    html.push('<option value="' + data[i].Id + '">' + data[i].placa + '</option>');
+                    html.push('<option value="' + data[i].Id + '">' + data[i].nombre + '</option>');
                 }
-                $("#vehiculo").html(html);
+                $("#aseguradoraAdd").html(html);
             });
-        },
-        setLatLong: function (e) {
-            $("#map").css("display", "none");
-            $("#setLatLong").css("display", "none");
-            $("#formAddSiniestro").css("display", "block");
-            if ($("#longitud").val() == "") {
-                var latlong = miLatLong.toString();
-                var miLatitud = latlong.substring(0, latlong.indexOf(","));
-                var miLongitud = latlong.substring(latlong.indexOf(",") + 1, latlong.length);
-                $("#latitud").val(miLatitud);
-                $("#longitud").val(miLongitud);
-            }
-
+            
+            //cargamos ds brooker 
+            var dsBrooker = app.brooker.brookerModel.dataSource;
+            dsBrooker.fetch(function () {
+                var html = [];
+                var data = dsBrooker.data();
+                for (var i = 0; i < data.length; i++) {
+                    html.push('<option value="' + data[i].Id + '">' + data[i].nombre + '</option>');
+                }
+                $("#brookerAdd").html(html);
+            });
         },
         onSaveClick: function (e) {
             var addFormData = this.get('addFormData'),
                 addModel = {
-                    longitud: addFormData.longitud,
-                    latitud: addFormData.latitud,
-                    tipo: addFormData.tipo,
+                    brooker: addFormData.brookerAdd,
+                    aseguradora: addFormData.aseguradoraAdd,
+                    modelo: addFormData.modelo,
+                    placa: addFormData.placa,
                 },
-                filter = siniestroModel && siniestroModel.get('paramFilter'),
-                dataSource = siniestroModel.get('dataSource');
+                filter = vehiculoModel && vehiculoModel.get('paramFilter'),
+                dataSource = vehiculoModel.get('dataSource');
 
             dataSource.add(addModel);
             dataSource.one('change', function (e) {
@@ -286,10 +252,10 @@ app.siniestro = kendo.observable({
 
     if (typeof dataProvider.sbProviderReady === 'function') {
         dataProvider.sbProviderReady(function dl_sbProviderReady() {
-            parent.set('siniestroModel', siniestroModel);
+            parent.set('vehiculoModel', vehiculoModel);
         });
     } else {
-        parent.set('siniestroModel', siniestroModel);
+        parent.set('vehiculoModel', vehiculoModel);
     }
 
     parent.set('onShow', function (e) {
@@ -311,9 +277,9 @@ app.siniestro = kendo.observable({
         fetchFilteredData(param);
     });
 
-})(app.siniestro);
+})(app.vehiculo);
 
-// START_CUSTOM_CODE_siniestroModel
+// START_CUSTOM_CODE_vehiculoModel
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
 
-// END_CUSTOM_CODE_siniestroModel
+// END_CUSTOM_CODE_vehiculoModel

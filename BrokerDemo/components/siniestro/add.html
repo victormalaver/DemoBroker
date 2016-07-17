@@ -16,15 +16,21 @@
             <ul class="form-content" data-role="listview" data-style="inset">
                 <li class="form-content-item">
                     <label class="km-label-above">
-                        <span>Tipo</span>
+                        <span>Tipo</span> 
                         <select id="tipo" data-bind="value: addFormData.tipo">
-                            <option>Mecánico</option>
+                            <option selected>Mecánico</option>
                             <option>Grua</option>
                             <option>Robo Parcial</option>
                             <option>Robo Total</option>
                             <option>Choque</option>
                             <option>Choque atropello</option>
                         </select>
+                    </label>
+                </li>
+                <li class="form-content-item">
+                    <label class="km-label-above">
+                        <span>Vehículo</span>
+                        <select id="vehiculo" data-bind="value: addFormData.vehiculo"></select>
                     </label>
                 </li>
                 <li class="form-content-item">

@@ -1,18 +1,18 @@
 'use strict';
 
-app.siniestro = kendo.observable({
-    onShow: function () {},
-    afterShow: function () {}
+app.brooker = kendo.observable({
+    onShow: function() {},
+    afterShow: function() {}
 });
 
-// START_CUSTOM_CODE_siniestro
+// START_CUSTOM_CODE_brooker
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
 
-// END_CUSTOM_CODE_siniestro
-(function (parent) {
+// END_CUSTOM_CODE_brooker
+(function(parent) {
     var dataProvider = app.data.brokerDemo,
-        fetchFilteredData = function (paramFilter, searchFilter) {
-            var model = parent.get('siniestroModel'),
+        fetchFilteredData = function(paramFilter, searchFilter) {
+            var model = parent.get('brookerModel'),
                 dataSource = model.get('dataSource');
 
             if (paramFilter) {
@@ -32,7 +32,7 @@ app.siniestro = kendo.observable({
                 dataSource.filter({});
             }
         },
-        processImage = function (img) {
+        processImage = function(img) {
 
             function isAbsolute(img) {
                 if  (img && (img.slice(0,  5)  ===  'http:' || img.slice(0,  6)  ===  'https:' || img.slice(0,  2)  ===  '//'  ||  img.slice(0,  5)  ===  'data:')) {
@@ -51,9 +51,9 @@ app.siniestro = kendo.observable({
 
             return img;
         },
-        flattenLocationProperties = function (dataItem) {
+        flattenLocationProperties = function(dataItem) {
             var propName, propValue,
-                isLocation = function (value) {
+                isLocation = function(value) {
                     return propValue && typeof propValue === 'object' &&
                         propValue.longitude && propValue.latitude;
                 };
@@ -72,10 +72,10 @@ app.siniestro = kendo.observable({
         dataSourceOptions = {
             type: 'everlive',
             transport: {
-                typeName: 'siniestro',
+                typeName: 'brooker',
                 dataProvider: dataProvider
             },
-            change: function (e) {
+            change: function(e) {
                 var data = this.data();
                 for (var i = 0; i < data.length; i++) {
                     var dataItem = data[i];
@@ -83,7 +83,7 @@ app.siniestro = kendo.observable({
                     flattenLocationProperties(dataItem);
                 }
             },
-            error: function (e) {
+            error: function(e) {
 
                 if (e.xhr) {
                     alert(JSON.stringify(e.xhr));
@@ -92,8 +92,12 @@ app.siniestro = kendo.observable({
             schema: {
                 model: {
                     fields: {
-                        'tipo': {
-                            field: 'tipo',
+                        'nombre': {
+                            field: 'nombre',
+                            defaultValue: ''
+                        },
+                        'numero': {
+                            field: 'numero',
                             defaultValue: ''
                         },
                     }
@@ -102,9 +106,9 @@ app.siniestro = kendo.observable({
             serverFiltering: true,
         },
         dataSource = new kendo.data.DataSource(dataSourceOptions),
-        siniestroModel = kendo.observable({
+        brookerModel = kendo.observable({
             dataSource: dataSource,
-            fixHierarchicalData: function (data) {
+            fixHierarchicalData: function(data) {
                 var result = {},
                     layout = {};
 
@@ -151,41 +155,38 @@ app.siniestro = kendo.observable({
 
                 return result;
             },
-            itemClick: function (e) {
-                var dataItem = e.dataItem || siniestroModel.originalItem;
+            itemClick: function(e) {
+                var dataItem = e.dataItem || brookerModel.originalItem;
 
-                app.mobileApp.navigate('#components/siniestro/details.html?uid=' + dataItem.uid);
+                app.mobileApp.navigate('#components/brooker/details.html?uid=' + dataItem.uid);
 
             },
-            addClick: function () {
-                app.mobileApp.navigate('#components/siniestro/add.html');
+            detailsShow: function(e) {
+                brookerModel.setCurrentItemByUid(e.view.params.uid);
             },
-            detailsShow: function (e) {
-                siniestroModel.setCurrentItemByUid(e.view.params.uid);
-            },
-            setCurrentItemByUid: function (uid) {
+            setCurrentItemByUid: function(uid) {
                 var item = uid,
-                    dataSource = siniestroModel.get('dataSource'),
+                    dataSource = brookerModel.get('dataSource'),
                     itemModel = dataSource.getByUid(item);
 
-                if (!itemModel.tipo) {
-                    itemModel.tipo = String.fromCharCode(160);
+                if (!itemModel.nombre) {
+                    itemModel.nombre = String.fromCharCode(160);
                 }
 
-                siniestroModel.set('originalItem', itemModel);
-                siniestroModel.set('currentItem',
-                    siniestroModel.fixHierarchicalData(itemModel));
+                brookerModel.set('originalItem', itemModel);
+                brookerModel.set('currentItem',
+                    brookerModel.fixHierarchicalData(itemModel));
 
                 return itemModel;
             },
-            linkBind: function (linkString) {
+            linkBind: function(linkString) {
                 var linkChunks = linkString.split('|');
                 if (linkChunks[0].length === 0) {
                     return this.get("currentItem." + linkChunks[1]);
                 }
                 return linkChunks[0] + this.get("currentItem." + linkChunks[1]);
             },
-            imageBind: function (imageField) {
+            imageBind: function(imageField) {
                 if (imageField.indexOf("|") > -1) {
                     return processImage(this.get("currentItem." + imageField.split("|")[0]));
                 }
@@ -194,105 +195,15 @@ app.siniestro = kendo.observable({
             currentItem: {}
         });
 
-    parent.set('addItemViewModel', kendo.observable({
-        onShow: function (e) {
-            // Reset the form data.
-            this.set('addFormData', {
-                longitud: '',
-                latitud: '',
-                tipo: '',
-            });
-
-            $("#formAddSiniestro").css("display", "none");
-            $("#setLatLong").css("display", "block");
-            $("#map").css("display", "block");
-            $("select#tipo")[0].selectedIndex = 0;
-            //mapa
-            $("#map").remove();
-            var divmap = "<div id='map'></div>"
-            $("#divmap").after(divmap);
-            var alto = $(window).height() - $("#siniestroModelAddItemView .km-header").height() - $("#setLatLong").height();
-            $("#map").css("height", alto + "px");
-
-            if (miLatLong.length > 0) {
-                var map = L.map('map').setView(miLatLong, 18);
-            } else {
-                miLatLong = [parseFloat(-12.0553016), parseFloat(-77.062695)];
-                var map = L.map('map').setView(miLatLong, 18);
-            }
-
-            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-
-            var marker = L.marker(miLatLong, {
-                    draggable: 'true'
-                }).addTo(map)
-                .bindPopup('Mi ubicación<br> Arrastre la marca.')
-                .openPopup();
-            marker.on("dragend", function (ev) {
-                var chagedPos = ev.target.getLatLng();
-                this.bindPopup(chagedPos.toString()).openPopup();
-                
-                var latlong = chagedPos.toString().replace("LatLng(","").replace(")","");
-                var miLatitud = latlong.substring(0, latlong.indexOf(","));
-                var miLongitud = latlong.substring(latlong.indexOf(",") + 1, latlong.length);
-                $("#latitud").val(miLatitud);
-                $("#longitud").val(miLongitud);
-            });
-
-            //cargamos ds vehiculo 
-            var dsVehiculo = app.vehiculo.vehiculoModel.dataSource;
-            dsVehiculo.fetch(function () {
-                var html = [];
-                var data = dsVehiculo.data();
-                for (var i = 0; i < data.length; i++) {
-                    html.push('<option value="' + data[i].Id + '">' + data[i].placa + '</option>');
-                }
-                $("#vehiculo").html(html);
-            });
-        },
-        setLatLong: function (e) {
-            $("#map").css("display", "none");
-            $("#setLatLong").css("display", "none");
-            $("#formAddSiniestro").css("display", "block");
-            if ($("#longitud").val() == "") {
-                var latlong = miLatLong.toString();
-                var miLatitud = latlong.substring(0, latlong.indexOf(","));
-                var miLongitud = latlong.substring(latlong.indexOf(",") + 1, latlong.length);
-                $("#latitud").val(miLatitud);
-                $("#longitud").val(miLongitud);
-            }
-
-        },
-        onSaveClick: function (e) {
-            var addFormData = this.get('addFormData'),
-                addModel = {
-                    longitud: addFormData.longitud,
-                    latitud: addFormData.latitud,
-                    tipo: addFormData.tipo,
-                },
-                filter = siniestroModel && siniestroModel.get('paramFilter'),
-                dataSource = siniestroModel.get('dataSource');
-
-            dataSource.add(addModel);
-            dataSource.one('change', function (e) {
-                app.mobileApp.navigate('#:back');
-            });
-
-            dataSource.sync();
-        }
-    }));
-
     if (typeof dataProvider.sbProviderReady === 'function') {
         dataProvider.sbProviderReady(function dl_sbProviderReady() {
-            parent.set('siniestroModel', siniestroModel);
+            parent.set('brookerModel', brookerModel);
         });
     } else {
-        parent.set('siniestroModel', siniestroModel);
+        parent.set('brookerModel', brookerModel);
     }
 
-    parent.set('onShow', function (e) {
+    parent.set('onShow', function(e) {
         var param = e.view.params.filter ? JSON.parse(e.view.params.filter) : null,
             isListmenu = false,
             backbutton = e.view.element && e.view.element.find('header [data-role="navbar"] .backButtonWrapper');
@@ -311,9 +222,9 @@ app.siniestro = kendo.observable({
         fetchFilteredData(param);
     });
 
-})(app.siniestro);
+})(app.brooker);
 
-// START_CUSTOM_CODE_siniestroModel
+// START_CUSTOM_CODE_brookerModel
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
 
-// END_CUSTOM_CODE_siniestroModel
+// END_CUSTOM_CODE_brookerModel

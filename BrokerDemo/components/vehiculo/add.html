@@ -1,0 +1,59 @@
+<div data-role="view" data-title="Add" data-model="app.vehiculo.addItemViewModel" data-bind="events: { show: onShow }" id="vehiculoModelAddItemView">
+    <header data-role="header">
+        <div data-role="navbar" class="header-text">
+            <span>Nuevo Vehiculo</span>
+            <a data-role="backbutton" data-align="left">Cancel</a>
+            <a data-role="button" data-align="right" data-bind="events: { click: onSaveClick }">Save</a>
+        </div>
+    </header>
+    <!-- START_CUSTOM_CODE_vehiculoModel -->
+    <!-- END_CUSTOM_CODE_vehiculoModel -->
+    <div id="editableListForm21" class="form-view">
+        <form>
+            <ul class="form-content" data-role="listview" data-style="inset">
+                <li class="form-content-item">
+
+                    <label class="km-label-above">
+
+                        <span>Placa</span>
+
+                        <input id="placa" data-bind="value: addFormData.placa" placeholder="Escriba la placa del vehiculo" type="text">
+                    </label>
+
+                </li>
+                <li class="form-content-item">
+
+                    <label class="km-label-above">
+
+                        <span>Modelo</span>
+
+                        <input id="modelo" data-bind="value: addFormData.modelo" placeholder="Modelo del vehiculo" type="text">
+                    </label>
+
+                </li>
+                <li class="form-content-item">
+
+                    <label class="km-label-above">
+
+                        <span>Aseguradora</span>
+
+                        <select id="aseguradoraAdd" data-bind="value: addFormData.aseguradoraAdd"></select> 
+                    </label>
+
+                </li>
+                <li class="form-content-item">
+
+                    <label class="km-label-above">
+
+                        <span>Brooker</span>
+
+                        <select id="brookerAdd" data-bind="value: addFormData.brookerAdd"></select>
+                    </label>
+
+                </li>
+            </ul>
+        </form>
+        <!-- START_CUSTOM_CODE_editableListForm21 -->
+        <!-- END_CUSTOM_CODE_editableListForm21 -->
+    </div>
+</div>

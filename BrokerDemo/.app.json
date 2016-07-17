@@ -12,14 +12,14 @@
           "emailLabel": "Email",
           "passwordLabel": "Password",
           "signinLabel": "Ingresar",
-          "signinRedirect": "home",
+          "signinRedirect": "vehiculo",
           "enableRegistration": true,
           "gotoRegisterLabel": "Crear cuenta",
           "registerEmailLabel": "Email",
           "registerPasswordLabel": "Password",
           "registerNameLabel": "Nombre",
           "registerLabel": "Registrarme",
-          "registerRedirect": "home",
+          "registerRedirect": "vehiculo",
           "gotoSigninLabel": "Iniciar Sesión",
           "enableLogout": true,
           "logoutLabel": "Salir",
@@ -97,6 +97,139 @@
       "title": "Siniestro",
       "addToNavigation": true,
       "icon": "globe"
+    },
+    {
+      "type": "kendo-ui-mobile:view",
+      "name": "aseguradora",
+      "components": [
+        {
+          "type": "kendo-ui-mobile:editableList",
+          "listExtraFields": [],
+          "detailExtraFields": [],
+          "components": [],
+          "name": "aseguradoraModel",
+          "dataProvider": "brokerDemo",
+          "collection": "aseguradora",
+          "headerField": "nombre",
+          "subHeaderField": "numero",
+          "isMapView": false,
+          "pullToRefresh": false,
+          "endlessScroll": false,
+          "deleteItemButton": false,
+          "detailHeaderFieldSource": "static",
+          "detailHeaderFieldValue": "Detail",
+          "addItemForm": false,
+          "editItemForm": false
+        }
+      ],
+      "title": "Aseguradora",
+      "addToNavigation": true,
+      "icon": "organize"
+    },
+    {
+      "type": "kendo-ui-mobile:view",
+      "name": "vehiculo",
+      "components": [
+        {
+          "type": "kendo-ui-mobile:editableList",
+          "listExtraFields": [],
+          "detailExtraFields": [],
+          "components": [
+            {
+              "type": "kendo-ui-mobile:editableListForm",
+              "components": [
+                {
+                  "type": "kendo-ui-mobile:editableListFormField",
+                  "name": "placa",
+                  "dataBindingRelationChildren": "[]",
+                  "title": "Placa",
+                  "inputType": "text",
+                  "titlePosition": "top",
+                  "placeholder": "Escriba la placa del vehiculo",
+                  "dataBinding": "placa"
+                },
+                {
+                  "type": "kendo-ui-mobile:editableListFormField",
+                  "name": "modelo",
+                  "dataBindingRelationChildren": "[]",
+                  "title": "Modelo",
+                  "inputType": "text",
+                  "titlePosition": "top",
+                  "placeholder": "Modelo del vehiculo",
+                  "dataBinding": "modelo"
+                },
+                {
+                  "type": "kendo-ui-mobile:editableListFormField",
+                  "name": "aseguradoraAdd",
+                  "dataBindingRelationChildren": "[]",
+                  "title": "Aseguradora",
+                  "inputType": "text",
+                  "titlePosition": "top",
+                  "placeholder": "Type here ...",
+                  "dataBinding": "aseguradora"
+                },
+                {
+                  "type": "kendo-ui-mobile:editableListFormField",
+                  "name": "brookerAdd",
+                  "dataBindingRelationChildren": "[]",
+                  "title": "Brooker",
+                  "inputType": "text",
+                  "titlePosition": "top",
+                  "placeholder": "Type here ...",
+                  "dataBinding": "brooker"
+                }
+              ],
+              "name": "editableListForm21",
+              "formType": "add"
+            }
+          ],
+          "name": "vehiculoModel",
+          "dataProvider": "brokerDemo",
+          "collection": "vehiculo",
+          "headerField": "placa",
+          "subHeaderField": "modelo",
+          "isMapView": false,
+          "pullToRefresh": false,
+          "endlessScroll": false,
+          "deleteItemButton": false,
+          "detailHeaderFieldSource": "static",
+          "detailHeaderFieldValue": "Detail",
+          "addItemForm": true,
+          "addScreenHeaderValue": "Nuevo Vehiculo",
+          "editItemForm": false
+        }
+      ],
+      "title": "Mis Seguros",
+      "addToNavigation": true,
+      "icon": "info"
+    },
+    {
+      "type": "kendo-ui-mobile:view",
+      "name": "brooker",
+      "components": [
+        {
+          "type": "kendo-ui-mobile:editableList",
+          "listExtraFields": [],
+          "detailExtraFields": [],
+          "components": [],
+          "name": "brookerModel",
+          "dataProvider": "brokerDemo",
+          "collection": "brooker",
+          "headerField": "nombre",
+          "subHeaderField": "numero",
+          "isMapView": false,
+          "pullToRefresh": false,
+          "endlessScroll": false,
+          "deleteItemButton": false,
+          "detailHeaderFieldSource": "static",
+          "detailHeaderFieldValue": "Detail",
+          "addItemForm": false,
+          "editItemForm": false
+        }
+      ],
+      "title": "Brooker",
+      "addToNavigation": true,
+      "icon": "organize"
     }
   ],
   "dataProviders": [

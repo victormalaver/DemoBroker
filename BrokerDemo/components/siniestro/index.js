@@ -203,10 +203,15 @@ app.siniestro = kendo.observable({
                 tipo: '',
             });
             $("#formAddSiniestro").css("display","none");
+            $("#setLatLong").css("display","block");
             $("#map").css("display","block");
             //mapa
+            $("#map").remove();
+            var divmap = "<div id='map'></div>" 
+            $("#divmap").after(divmap);
             var alto = $(window).height() - $("#siniestroModelAddItemView .km-header").height();
             $("#map").css("height", alto + "px");
+            
             if (miLatLong.length > 0) {
                 var map = L.map('map').setView(miLatLong, 18);
             } else {
@@ -229,10 +234,10 @@ app.siniestro = kendo.observable({
                 $("#latitud").val(chagedPos.toString());
                 $("#longitud").val(chagedPos.toString());
             });
-
         },
         setLatLong: function (e) {
             $("#map").css("display","none");
+            $("#setLatLong").css("display","none");
             $("#formAddSiniestro").css("display","block");
         },
         onSaveClick: function (e) {

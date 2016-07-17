@@ -9,15 +9,22 @@
     <!-- START_CUSTOM_CODE_siniestroModel -->
     <!-- END_CUSTOM_CODE_siniestroModel -->
     <div id="editableListForm2" class="form-view">
-        <div id="map">
-        </div>
-        <a data-role="button" data-bind="events: { click: setLatLong }">Reportar Siniestro</a>
+        <div id="divmap"></div>
+        <div id="map"></div>
+        <a id="setLatLong" data-role="button" data-bind="events: { click: setLatLong }">Reportar Siniestro</a>
         <form id="formAddSiniestro">
             <ul class="form-content" data-role="listview" data-style="inset">
                 <li class="form-content-item">
                     <label class="km-label-above">
                         <span>Tipo</span>
-                        <input id="tipo" data-bind="value: addFormData.tipo" placeholder="Seleccione el tipo" type="text">
+                        <select id="tipo" data-bind="value: addFormData.tipo">
+                            <option>Mecánico</option>
+                            <option>Grua</option>
+                            <option>Robo Parcial</option>
+                            <option>Robo Total</option>
+                            <option>Choque</option>
+                            <option>Choque atropello</option>
+                        </select>
                     </label>
                 </li>
                 <li class="form-content-item">
@@ -36,6 +43,8 @@
                         <input id="longitud" data-bind="value: addFormData.longitud" placeholder="Longitud" type="text">
                     </label>
                 </li>
+                </br>
+                </br>
                 <li>
                     <a data-role="button" data-align="right" data-bind="events: { click: onSaveClick }">Save</a>
                 </li>

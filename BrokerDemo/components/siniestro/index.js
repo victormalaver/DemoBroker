@@ -73,7 +73,28 @@ app.siniestro = kendo.observable({
             type: 'everlive',
             transport: {
                 typeName: 'siniestro',
-                dataProvider: dataProvider
+                dataProvider: dataProvider,
+                read: {
+                    headers: {
+                        "X-Everlive-Expand": JSON.stringify({
+                            "vehiculo": {
+                                "TargetTypeName": "vehiculo",
+                                "ReturnAs": "aseguradoraExpanded",
+                                "SingleField": "placa"
+                            },
+                            "aseguradora": {
+                                "TargetTypeName": "aseguradora",
+                                "ReturnAs": "aseguradoraExpanded",
+                                "SingleField": "numero"
+                            },
+                            "brooker": {
+                                "TargetTypeName": "brooker",
+                                "ReturnAs": "brookerExpanded",
+                                "SingleField": "numero"
+                            }
+                        })
+                    }
+                }
             },
             change: function (e) {
                 var data = this.data();
@@ -197,12 +218,6 @@ app.siniestro = kendo.observable({
     parent.set('addItemViewModel', kendo.observable({
         onShow: function (e) {
             // Reset the form data.
-            this.set('addFormData', {
-                longitud: '',
-                latitud: '',
-                tipo: '',
-            });
-
             $("#formAddSiniestro").css("display", "none");
             $("#setLatLong").css("display", "block");
             $("#map").css("display", "block");
@@ -233,14 +248,24 @@ app.siniestro = kendo.observable({
             marker.on("dragend", function (ev) {
                 var chagedPos = ev.target.getLatLng();
                 this.bindPopup(chagedPos.toString()).openPopup();
-                
-                var latlong = chagedPos.toString().replace("LatLng(","").replace(")","");
+
+                var latlong = chagedPos.toString().replace("LatLng(", "").replace(")", "");
                 var miLatitud = latlong.substring(0, latlong.indexOf(","));
                 var miLongitud = latlong.substring(latlong.indexOf(",") + 1, latlong.length);
                 $("#latitud").val(miLatitud);
                 $("#longitud").val(miLongitud);
             });
-
+			
+            //cargamos ds tipo 
+            var dsTipo = app.vehiculo.vehiculoModel.dataSource;
+            dsTipo.fetch(function () {
+                var html = [];
+                var data = dsTipo.data();
+                for (var i = 0; i < data.length; i++) {
+                    html.push('<option value="' + data[i].Id + '">' + data[i].nombre + '</option>');
+                }
+                $("#tipo").html(html);
+            });
             //cargamos ds vehiculo 
             var dsVehiculo = app.vehiculo.vehiculoModel.dataSource;
             dsVehiculo.fetch(function () {
@@ -263,23 +288,21 @@ app.siniestro = kendo.observable({
                 $("#latitud").val(miLatitud);
                 $("#longitud").val(miLongitud);
             }
-
         },
         onSaveClick: function (e) {
-            var addFormData = this.get('addFormData'),
-                addModel = {
-                    longitud: addFormData.longitud,
-                    latitud: addFormData.latitud,
-                    tipo: addFormData.tipo,
+            var addModel = {
+                    longitud: $("#longitud").val(),
+                    latitud: $("#latitud").val(),
+                    tipo: $("#tipo option:selected").text(),
+                    vehiculo: $("#vehiculo option:selected").val(),
                 },
                 filter = siniestroModel && siniestroModel.get('paramFilter'),
                 dataSource = siniestroModel.get('dataSource');
 
             dataSource.add(addModel);
             dataSource.one('change', function (e) {
-                app.mobileApp.navigate('#:back');
+                app.mobileApp.navigate('#components/siniestro/view.html');
             });
-
             dataSource.sync();
         }
     }));

@@ -230,6 +230,34 @@
       "title": "Brooker",
       "addToNavigation": true,
       "icon": "organize"
+    },
+    {
+      "type": "kendo-ui-mobile:view",
+      "name": "tipos",
+      "components": [
+        {
+          "type": "kendo-ui-mobile:editableList",
+          "listExtraFields": [],
+          "detailExtraFields": [],
+          "components": [],
+          "name": "tiposModel",
+          "dataProvider": "brokerDemo",
+          "collection": "tipo",
+          "headerField": "nombre",
+          "subHeaderField": "categoria",
+          "isMapView": false,
+          "pullToRefresh": false,
+          "endlessScroll": false,
+          "deleteItemButton": false,
+          "detailHeaderFieldSource": "static",
+          "detailHeaderFieldValue": "Detail",
+          "addItemForm": false,
+          "editItemForm": false
+        }
+      ],
+      "title": "Tipos",
+      "addToNavigation": true,
+      "icon": "organize"
     }
   ],
   "dataProviders": [

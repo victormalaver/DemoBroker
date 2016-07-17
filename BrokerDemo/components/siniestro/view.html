@@ -1,37 +1,26 @@
 <div id="siniestroView" data-role="view" data-title="Siniestro" data-layout="main" data-model="app.siniestro" data-show="app.siniestro.onShow" data-after-show="app.siniestro.afterShow">
-
     <!-- START_CUSTOM_CODE_siniestro -->
     <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
-
     <!-- END_CUSTOM_CODE_siniestro -->
     <header data-role="header">
         <div data-role="navbar" class="header-text">
             <a data-role="backbutton" data-align="left" class="backButtonWrapper" style="display: none;">Back</a>
             <span data-role="view-title"></span>
-
             <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
-
-
             <a data-role="button" data-align="right" data-bind="events: { click: siniestroModel.addClick }">Add</a>
-
         </div>
     </header>
-
-
-    <ul class="masterDetailView" data-role="listview" data-auto-bind="false" data-style="inset" data-template="siniestroModelTemplate" data-bind="{ source: siniestroModel.dataSource, events: {click: siniestroModel.itemClick} }" data-pull-to-refresh="false"
-    data-endless-scroll="false">
+    <ul class="masterDetailView" data-role="listview" data-auto-bind="false" data-style="inset" data-template="siniestroModelTemplate" data-bind="{ source: siniestroModel.dataSource, events: {click: siniestroModel.itemClick} }" data-pull-to-refresh="false" data-endless-scroll="false">
     </ul>
-
-
     <!-- START_CUSTOM_CODE_siniestroModel -->
     <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
-
     <!-- END_CUSTOM_CODE_siniestroModel -->
     <script type="text/x-kendo-template" id="siniestroModelTemplate">
         <div class="image-with-text">
             # data = app.siniestro.siniestroModel.fixHierarchicalData(data); #
-            <h3>#: data['tipo'] #</h3>
-            <p>#: data['tipo'] #</p>
+            <h3>#: data['tipoExpanded'].nombre # - #: data['tipoExpanded'].categoria #</h3>
+            <p>#: data['vehiculoExpanded'].placa #</p>
+            <p>Llamar <a id="#: data['numero'] #">#: data['numero'] #</a></p>
         </div>
     </script>
 </div>

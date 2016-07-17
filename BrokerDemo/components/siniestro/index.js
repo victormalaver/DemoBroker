@@ -32,43 +32,6 @@ app.siniestro = kendo.observable({
                 dataSource.filter({});
             }
         },
-        processImage = function (img) {
-
-            function isAbsolute(img) {
-                if  (img && (img.slice(0,  5)  ===  'http:' || img.slice(0,  6)  ===  'https:' || img.slice(0,  2)  ===  '//'  ||  img.slice(0,  5)  ===  'data:')) {
-                    return true;
-                }
-                return false;
-            }
-
-            if (!img) {
-                var empty1x1png = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQI12NgYAAAAAMAASDVlMcAAAAASUVORK5CYII=';
-                img = 'data:image/png;base64,' + empty1x1png;
-            } else if (!isAbsolute(img)) {
-                var setup = dataProvider.setup || {};
-                img = setup.scheme + ':' + setup.url + setup.appId + '/Files/' + img + '/Download';
-            }
-
-            return img;
-        },
-        flattenLocationProperties = function (dataItem) {
-            var propName, propValue,
-                isLocation = function (value) {
-                    return propValue && typeof propValue === 'object' &&
-                        propValue.longitude && propValue.latitude;
-                };
-
-            for (propName in dataItem) {
-                if (dataItem.hasOwnProperty(propName)) {
-                    propValue = dataItem[propName];
-                    if (isLocation(propValue)) {
-                        dataItem[propName] =
-                            kendo.format('Latitude: {0}, Longitude: {1}',
-                                propValue.latitude, propValue.longitude);
-                    }
-                }
-            }
-        },
         dataSourceOptions = {
             type: 'everlive',
             transport: {
@@ -79,18 +42,11 @@ app.siniestro = kendo.observable({
                         "X-Everlive-Expand": JSON.stringify({
                             "vehiculo": {
                                 "TargetTypeName": "vehiculo",
-                                "ReturnAs": "aseguradoraExpanded",
-                                "SingleField": "placa"
+                                "ReturnAs": "vehiculoExpanded"
                             },
-                            "aseguradora": {
-                                "TargetTypeName": "aseguradora",
-                                "ReturnAs": "aseguradoraExpanded",
-                                "SingleField": "numero"
-                            },
-                            "brooker": {
-                                "TargetTypeName": "brooker",
-                                "ReturnAs": "brookerExpanded",
-                                "SingleField": "numero"
+                            "tipo": {
+                                "TargetTypeName": "tipo",
+                                "ReturnAs": "tipoExpanded"
                             }
                         })
                     }
@@ -100,8 +56,6 @@ app.siniestro = kendo.observable({
                 var data = this.data();
                 for (var i = 0; i < data.length; i++) {
                     var dataItem = data[i];
-
-                    flattenLocationProperties(dataItem);
                 }
             },
             error: function (e) {
@@ -221,7 +175,6 @@ app.siniestro = kendo.observable({
             $("#formAddSiniestro").css("display", "none");
             $("#setLatLong").css("display", "block");
             $("#map").css("display", "block");
-            $("select#tipo")[0].selectedIndex = 0;
             //mapa
             $("#map").remove();
             var divmap = "<div id='map'></div>"
@@ -255,14 +208,14 @@ app.siniestro = kendo.observable({
                 $("#latitud").val(miLatitud);
                 $("#longitud").val(miLongitud);
             });
-			
+
             //cargamos ds tipo 
-            var dsTipo = app.vehiculo.vehiculoModel.dataSource;
-            dsTipo.fetch(function () {
+            var dsTipos = app.tipos.tiposModel.dataSource;
+            dsTipos.fetch(function () {
                 var html = [];
-                var data = dsTipo.data();
+                var data = dsTipos.data();
                 for (var i = 0; i < data.length; i++) {
-                    html.push('<option value="' + data[i].Id + '">' + data[i].nombre + '</option>');
+                    html.push('<option value="' + data[i].Id + '" categoria="' + data[i].categoria + '" >' + data[i].nombre + '</option>');
                 }
                 $("#tipo").html(html);
             });
@@ -272,7 +225,7 @@ app.siniestro = kendo.observable({
                 var html = [];
                 var data = dsVehiculo.data();
                 for (var i = 0; i < data.length; i++) {
-                    html.push('<option value="' + data[i].Id + '">' + data[i].placa + '</option>');
+                    html.push('<option value="' + data[i].Id + '" booker="' + data[i].brooker + '" aseguradora="' + data[i].aseguradora + '">' + data[i].placa + '</option>');
                 }
                 $("#vehiculo").html(html);
             });
@@ -290,20 +243,36 @@ app.siniestro = kendo.observable({
             }
         },
         onSaveClick: function (e) {
+            kendo.mobile.application.showLoading();
+
+            //             var numero;
+            // 			var num=""
+            //             if ($("#tipo option:selected").attr("categoria") == "Brooker") {
+            //                 var dsBrooker = app.brooker.brookerModel.dataSource;
+            //                 numero = dsBrooker.getByUid($("#vehiculo option:selected").attr("brooker"));
+            //                 console.log(numero);
+            //                 num = numero.numero.toString();
+            //             } else {
+            //                 var dsAseguradora = app.aseguradora.aseguradoraModel.dataSource;
+            //                 numero = dsBrooker.getByUid($("#vehiculo option:selected").attr("aseguradora"));
+            //                 num = numero.numero.toString();
+            //             }
+            //             alert(num);
             var addModel = {
                     longitud: $("#longitud").val(),
                     latitud: $("#latitud").val(),
-                    tipo: $("#tipo option:selected").text(),
+                    tipo: $("#tipo option:selected").val(),
                     vehiculo: $("#vehiculo option:selected").val(),
+                    numero: "abcd"
                 },
                 filter = siniestroModel && siniestroModel.get('paramFilter'),
                 dataSource = siniestroModel.get('dataSource');
-
             dataSource.add(addModel);
+            dataSource.sync();
+            kendo.mobile.application.hideLoading();
             dataSource.one('change', function (e) {
                 app.mobileApp.navigate('#components/siniestro/view.html');
             });
-            dataSource.sync();
         }
     }));
 
@@ -316,6 +285,7 @@ app.siniestro = kendo.observable({
     }
 
     parent.set('onShow', function (e) {
+
         var param = e.view.params.filter ? JSON.parse(e.view.params.filter) : null,
             isListmenu = false,
             backbutton = e.view.element && e.view.element.find('header [data-role="navbar"] .backButtonWrapper');
@@ -332,6 +302,25 @@ app.siniestro = kendo.observable({
         }
 
         fetchFilteredData(param);
+        // dataSource.fetch(function () {
+        //     var data = dataSource.data();
+        //     for (var i = 0; i < data.length; i++) {
+        //         console.log(data[i]);
+        //         if (data[i].expandTipo.categoria == "Brooker") {
+        //             var dsBrooker = app.brooker.brookerModel.dataSource;
+        //             var numero = dsBrooker.getByUid(data[i].vehiculoTipo.brooker);
+        //             console.log(numero);
+        //             $("#"+data[i].Id).html(numero.numero);
+
+        //         }else{
+        //             console.log(numero);
+        //             var dsAseguradora = app.aseguradora.aseguradoraModel.dataSource;
+        //             var numero = dsAseguradora.getByUid(data[i].vehiculoTipo.aseguradora);
+        //             $("#"+data[i].Id).html(numero.numero);
+        //         }
+        //     }
+
+        // });
     });
 
 })(app.siniestro);

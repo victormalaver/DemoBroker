@@ -1,18 +1,18 @@
 'use strict';
 
-app.vehiculo = kendo.observable({
-    onShow: function () {},
-    afterShow: function () {}
+app.tipos = kendo.observable({
+    onShow: function() {},
+    afterShow: function() {}
 });
 
-// START_CUSTOM_CODE_vehiculo
+// START_CUSTOM_CODE_tipos
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
 
-// END_CUSTOM_CODE_vehiculo
-(function (parent) {
+// END_CUSTOM_CODE_tipos
+(function(parent) {
     var dataProvider = app.data.brokerDemo,
-        fetchFilteredData = function (paramFilter, searchFilter) {
-            var model = parent.get('vehiculoModel'),
+        fetchFilteredData = function(paramFilter, searchFilter) {
+            var model = parent.get('tiposModel'),
                 dataSource = model.get('dataSource');
 
             if (paramFilter) {
@@ -32,33 +32,58 @@ app.vehiculo = kendo.observable({
                 dataSource.filter({});
             }
         },
+        processImage = function(img) {
+
+            function isAbsolute(img) {
+                if  (img && (img.slice(0,  5)  ===  'http:' || img.slice(0,  6)  ===  'https:' || img.slice(0,  2)  ===  '//'  ||  img.slice(0,  5)  ===  'data:')) {
+                    return true;
+                }
+                return false;
+            }
+
+            if (!img) {
+                var empty1x1png = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQI12NgYAAAAAMAASDVlMcAAAAASUVORK5CYII=';
+                img = 'data:image/png;base64,' + empty1x1png;
+            } else if (!isAbsolute(img)) {
+                var setup = dataProvider.setup || {};
+                img = setup.scheme + ':' + setup.url + setup.appId + '/Files/' + img + '/Download';
+            }
+
+            return img;
+        },
+        flattenLocationProperties = function(dataItem) {
+            var propName, propValue,
+                isLocation = function(value) {
+                    return propValue && typeof propValue === 'object' &&
+                        propValue.longitude && propValue.latitude;
+                };
+
+            for (propName in dataItem) {
+                if (dataItem.hasOwnProperty(propName)) {
+                    propValue = dataItem[propName];
+                    if (isLocation(propValue)) {
+                        dataItem[propName] =
+                            kendo.format('Latitude: {0}, Longitude: {1}',
+                                propValue.latitude, propValue.longitude);
+                    }
+                }
+            }
+        },
         dataSourceOptions = {
             type: 'everlive',
             transport: {
-                typeName: 'vehiculo',
-                dataProvider: dataProvider,
-                read: {
-                    headers: {
-                        "X-Everlive-Expand": JSON.stringify({
-                            "brooker": {
-                                "TargetTypeName": "brooker",
-                                "ReturnAs": "brookerExpanded"
-                            },
-                            "aseguradora": {
-                                "TargetTypeName": "aseguradora",
-                                "ReturnAs": "aseguradoraExpanded"
-                            }
-                        })
-                    }
-                }
+                typeName: 'tipo',
+                dataProvider: dataProvider
             },
-            change: function (e) {
+            change: function(e) {
                 var data = this.data();
                 for (var i = 0; i < data.length; i++) {
                     var dataItem = data[i];
+
+                    flattenLocationProperties(dataItem);
                 }
             },
-            error: function (e) {
+            error: function(e) {
 
                 if (e.xhr) {
                     alert(JSON.stringify(e.xhr));
@@ -67,12 +92,12 @@ app.vehiculo = kendo.observable({
             schema: {
                 model: {
                     fields: {
-                        'placa': {
-                            field: 'placa',
+                        'nombre': {
+                            field: 'nombre',
                             defaultValue: ''
                         },
-                        'modelo': {
-                            field: 'modelo',
+                        'categoria': {
+                            field: 'categoria',
                             defaultValue: ''
                         },
                     }
@@ -81,9 +106,9 @@ app.vehiculo = kendo.observable({
             serverFiltering: true,
         },
         dataSource = new kendo.data.DataSource(dataSourceOptions),
-        vehiculoModel = kendo.observable({
+        tiposModel = kendo.observable({
             dataSource: dataSource,
-            fixHierarchicalData: function (data) {
+            fixHierarchicalData: function(data) {
                 var result = {},
                     layout = {};
 
@@ -130,41 +155,38 @@ app.vehiculo = kendo.observable({
 
                 return result;
             },
-            itemClick: function (e) {
-                var dataItem = e.dataItem || vehiculoModel.originalItem;
+            itemClick: function(e) {
+                var dataItem = e.dataItem || tiposModel.originalItem;
 
-                app.mobileApp.navigate('#components/vehiculo/details.html?uid=' + dataItem.uid);
+                app.mobileApp.navigate('#components/tipos/details.html?uid=' + dataItem.uid);
 
             },
-            addClick: function () {
-                app.mobileApp.navigate('#components/vehiculo/add.html');
+            detailsShow: function(e) {
+                tiposModel.setCurrentItemByUid(e.view.params.uid);
             },
-            detailsShow: function (e) {
-                vehiculoModel.setCurrentItemByUid(e.view.params.uid);
-            },
-            setCurrentItemByUid: function (uid) {
+            setCurrentItemByUid: function(uid) {
                 var item = uid,
-                    dataSource = vehiculoModel.get('dataSource'),
+                    dataSource = tiposModel.get('dataSource'),
                     itemModel = dataSource.getByUid(item);
 
-                if (!itemModel.placa) {
-                    itemModel.placa = String.fromCharCode(160);
+                if (!itemModel.nombre) {
+                    itemModel.nombre = String.fromCharCode(160);
                 }
 
-                vehiculoModel.set('originalItem', itemModel);
-                vehiculoModel.set('currentItem',
-                    vehiculoModel.fixHierarchicalData(itemModel));
+                tiposModel.set('originalItem', itemModel);
+                tiposModel.set('currentItem',
+                    tiposModel.fixHierarchicalData(itemModel));
 
                 return itemModel;
             },
-            linkBind: function (linkString) {
+            linkBind: function(linkString) {
                 var linkChunks = linkString.split('|');
                 if (linkChunks[0].length === 0) {
                     return this.get("currentItem." + linkChunks[1]);
                 }
                 return linkChunks[0] + this.get("currentItem." + linkChunks[1]);
             },
-            imageBind: function (imageField) {
+            imageBind: function(imageField) {
                 if (imageField.indexOf("|") > -1) {
                     return processImage(this.get("currentItem." + imageField.split("|")[0]));
                 }
@@ -173,67 +195,15 @@ app.vehiculo = kendo.observable({
             currentItem: {}
         });
 
-    parent.set('addItemViewModel', kendo.observable({
-        onShow: function (e) {
-            // Reset the form data.
-            this.set('addFormData', {
-                brookerAdd: '',
-                aseguradoraAdd: '',
-                modelo: '',
-                placa: '',
-            });
-
-            //cargamos ds aseguradora 
-            var dsAseguradora = app.aseguradora.aseguradoraModel.dataSource;
-            dsAseguradora.fetch(function () {
-                var html = [];
-                var data = dsAseguradora.data();
-                for (var i = 0; i < data.length; i++) {
-                    html.push('<option value="' + data[i].Id + '">' + data[i].nombre + '</option>');
-                }
-                $("#aseguradoraAdd").html(html);
-            });
-             
-            //cargamos ds brooker 
-            var dsBrooker = app.brooker.brookerModel.dataSource;
-            dsBrooker.fetch(function () {
-                var html = [];
-                var data = dsBrooker.data();
-                for (var i = 0; i < data.length; i++) {
-                    html.push('<option value="' + data[i].Id + '">' + data[i].nombre + '</option>');
-                }
-                $("#brookerAdd").html(html);
-            });
-        },
-        onSaveClick: function (e) {
-            var addFormData = this.get('addFormData'),
-                addModel = {
-                    brooker: $("#brookerAdd option:selected").val(),
-                    aseguradora: $("#aseguradoraAdd option:selected").val(),
-                    modelo: addFormData.modelo,
-                    placa: addFormData.placa,
-                },
-                filter = vehiculoModel && vehiculoModel.get('paramFilter'),
-                dataSource = vehiculoModel.get('dataSource');
-
-            dataSource.add(addModel);
-            dataSource.one('change', function (e) {
-                app.mobileApp.navigate('#:back');
-            });
-
-            dataSource.sync();
-        }
-    }));
-
     if (typeof dataProvider.sbProviderReady === 'function') {
         dataProvider.sbProviderReady(function dl_sbProviderReady() {
-            parent.set('vehiculoModel', vehiculoModel);
+            parent.set('tiposModel', tiposModel);
         });
     } else {
-        parent.set('vehiculoModel', vehiculoModel);
+        parent.set('tiposModel', tiposModel);
     }
 
-    parent.set('onShow', function (e) {
+    parent.set('onShow', function(e) {
         var param = e.view.params.filter ? JSON.parse(e.view.params.filter) : null,
             isListmenu = false,
             backbutton = e.view.element && e.view.element.find('header [data-role="navbar"] .backButtonWrapper');
@@ -252,9 +222,9 @@ app.vehiculo = kendo.observable({
         fetchFilteredData(param);
     });
 
-})(app.vehiculo);
+})(app.tipos);
 
-// START_CUSTOM_CODE_vehiculoModel
+// START_CUSTOM_CODE_tiposModel
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
 
-// END_CUSTOM_CODE_vehiculoModel
+// END_CUSTOM_CODE_tiposModel

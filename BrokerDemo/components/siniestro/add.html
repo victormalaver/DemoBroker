@@ -1,0 +1,47 @@
+<div data-role="view" data-title="Add" data-model="app.siniestro.addItemViewModel" data-bind="events: { show: onShow }" id="siniestroModelAddItemView">
+    <header data-role="header">
+        <div data-role="navbar" class="header-text">
+            <span>Reportar Siniestro</span>
+            <a data-role="backbutton" data-align="left">Cancel</a>
+            <!--             <a data-role="button" data-align="right" data-bind="events: { click: onSaveClick }">Save</a> -->
+        </div>
+    </header>
+    <!-- START_CUSTOM_CODE_siniestroModel -->
+    <!-- END_CUSTOM_CODE_siniestroModel -->
+    <div id="editableListForm2" class="form-view">
+        <a data-role="button" data-bind="events: { click: setLatLong }">Reportar Siniestro</a>
+        <div id="map">
+        </div>
+        <form>
+            <ul class="form-content" data-role="listview" data-style="inset">
+                <li class="form-content-item">
+                    <label class="km-label-above">
+                        <span>Tipo</span>
+                        <input id="tipo" data-bind="value: addFormData.tipo" placeholder="Seleccione el tipo" type="text">
+                    </label>
+                </li>
+                <li class="form-content-item">
+                    <label class="km-label-above">
+
+                        <span>Latitud</span>
+
+                        <input id="latitud" data-bind="value: addFormData.latitud" placeholder="Latitud" type="text">
+                    </label>
+                </li>
+                <li class="form-content-item">
+                    <label class="km-label-above">
+
+                        <span>Longitud</span>
+
+                        <input id="longitud" data-bind="value: addFormData.longitud" placeholder="Longitud" type="text">
+                    </label>
+                </li>
+                <li class="form-content-item">
+                    <a data-role="button" data-align="right" data-bind="events: { click: onSaveClick }">Save</a>
+                </li>
+            </ul>
+        </form>
+        <!-- START_CUSTOM_CODE_editableListForm2 -->
+        <!-- END_CUSTOM_CODE_editableListForm2 -->
+    </div>
+</div>

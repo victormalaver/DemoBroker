@@ -225,7 +225,7 @@ app.siniestro = kendo.observable({
                 var html = [];
                 var data = dsVehiculo.data();
                 for (var i = 0; i < data.length; i++) {
-                    html.push('<option value="' + data[i].Id + '" booker="' + data[i].brooker + '" aseguradora="' + data[i].aseguradora + '">' + data[i].placa + '</option>');
+                    html.push('<option value="' + data[i].Id + '" brooker="' + data[i].brooker + '" aseguradora="' + data[i].aseguradora + '">' + data[i].placa + '</option>');
                 }
                 $("#vehiculo").html(html);
             });
@@ -244,35 +244,58 @@ app.siniestro = kendo.observable({
         },
         onSaveClick: function (e) {
             kendo.mobile.application.showLoading();
-
-            //             var numero;
-            // 			var num=""
-            //             if ($("#tipo option:selected").attr("categoria") == "Brooker") {
-            //                 var dsBrooker = app.brooker.brookerModel.dataSource;
-            //                 numero = dsBrooker.getByUid($("#vehiculo option:selected").attr("brooker"));
-            //                 console.log(numero);
-            //                 num = numero.numero.toString();
-            //             } else {
-            //                 var dsAseguradora = app.aseguradora.aseguradoraModel.dataSource;
-            //                 numero = dsBrooker.getByUid($("#vehiculo option:selected").attr("aseguradora"));
-            //                 num = numero.numero.toString();
-            //             }
-            //             alert(num);
-            var addModel = {
-                    longitud: $("#longitud").val(),
-                    latitud: $("#latitud").val(),
-                    tipo: $("#tipo option:selected").val(),
-                    vehiculo: $("#vehiculo option:selected").val(),
-                    numero: "abcd"
-                },
-                filter = siniestroModel && siniestroModel.get('paramFilter'),
-                dataSource = siniestroModel.get('dataSource');
-            dataSource.add(addModel);
-            dataSource.sync();
-            kendo.mobile.application.hideLoading();
-            dataSource.one('change', function (e) {
-                app.mobileApp.navigate('#components/siniestro/view.html');
-            });
+            var num = "";
+            if ($("#tipo option:selected").attr("categoria") == "Brooker") {
+                var dsBrooker = app.brooker.brookerModel.dataSource;
+                dsBrooker.fetch(function () {
+                    var data = dsBrooker.data();
+                    for (var i = 0; i < data.length; i++) {
+                        if ($("#vehiculo option:selected").attr("brooker") == data[i].Id) {
+                            num = data[i].numero;
+                            var addModel = {
+                                    longitud: $("#longitud").val(),
+                                    latitud: $("#latitud").val(),
+                                    tipo: $("#tipo option:selected").val(),
+                                    vehiculo: $("#vehiculo option:selected").val(),
+                                    numero: num
+                                },
+                                filter = siniestroModel && siniestroModel.get('paramFilter'),
+                                dataSource = siniestroModel.get('dataSource');
+                            dataSource.add(addModel);
+                            dataSource.sync();
+                            dataSource.one('change', function (e) {
+                                app.mobileApp.navigate('#components/siniestro/view.html');
+                                kendo.mobile.application.hideLoading();
+                            });
+                        }
+                    }
+                });
+            } else {
+                var dsAseguradora = app.aseguradora.aseguradoraModel.dataSource;
+                dsAseguradora.fetch(function () {
+                    var data = dsAseguradora.data();
+                    for (var i = 0; i < data.length; i++) {
+                        if ($("#vehiculo option:selected").attr("aseguradora") == data[i].Id) {
+                            num = data[i].numero;
+                            var addModel = {
+                                    longitud: $("#longitud").val(),
+                                    latitud: $("#latitud").val(),
+                                    tipo: $("#tipo option:selected").val(),
+                                    vehiculo: $("#vehiculo option:selected").val(),
+                                    numero: num
+                                },
+                                filter = siniestroModel && siniestroModel.get('paramFilter'),
+                                dataSource = siniestroModel.get('dataSource');
+                            dataSource.add(addModel);
+                            dataSource.sync();
+                            dataSource.one('change', function (e) {
+                                app.mobileApp.navigate('#components/siniestro/view.html');
+                                kendo.mobile.application.hideLoading();
+                            });
+                        }
+                    }
+                });
+            }
         }
     }));
 

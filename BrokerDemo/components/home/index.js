@@ -12,8 +12,8 @@ app.home = kendo.observable({
 (function(parent) {
     var provider = app.data.brokerDemo,
         mode = 'signin',
-        registerRedirect = 'vehiculo',
-        signinRedirect = 'vehiculo',
+        registerRedirect = 'home',
+        signinRedirect = 'siniestro',
         rememberKey = 'brokerDemo_authData_homeModel',
         init = function(error) {
             if (error) {

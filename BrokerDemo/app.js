@@ -74,7 +74,7 @@ var miLatLong;
 
 // END_CUSTOM_CODE_kendoUiMobileApp
 
-function MakeCall() {
+function MakeCall(numero) {
     //Handle to Cordoba lib
-    window.open('tel:' + $("#TelefonosContactoCliente").data("kendoDropDownList").dataItem().Numero, '_system')
+    window.open('tel:' + numero, '_system')
 }

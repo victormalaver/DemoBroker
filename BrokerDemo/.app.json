@@ -177,10 +177,43 @@
                   "titlePosition": "top",
                   "placeholder": "Type here ...",
                   "dataBinding": "brooker"
+                },
+                {
+                  "type": "kendo-ui-mobile:editableListFormField",
+                  "name": "polizaAdd",
+                  "dataBindingRelationChildren": "[]",
+                  "title": "Número de póliza",
+                  "inputType": "text",
+                  "titlePosition": "top",
+                  "placeholder": "Número de póliza",
+                  "dataBinding": "poliza"
                 }
               ],
               "name": "editableListForm21",
               "formType": "add"
+            },
+            {
+              "type": "kendo-ui-mobile:editableListForm",
+              "components": [
+                {
+                  "type": "kendo-ui-mobile:editableListFormField",
+                  "name": "aseguradoraDetails",
+                  "dataBindingRelationChildren": "[]",
+                  "title": "Aseguradora",
+                  "inputType": "shortText",
+                  "dataBindingOptional": "aseguradora"
+                },
+                {
+                  "type": "kendo-ui-mobile:editableListFormField",
+                  "name": "brookerDetails",
+                  "dataBindingRelationChildren": "[]",
+                  "title": "Brooker",
+                  "inputType": "shortText",
+                  "dataBindingOptional": "brooker"
+                }
+              ],
+              "name": "editableListForm23",
+              "formType": "detail"
             }
           ],
           "name": "vehiculoModel",
@@ -192,10 +225,12 @@
           "pullToRefresh": false,
           "endlessScroll": false,
           "deleteItemButton": false,
-          "detailHeaderFieldSource": "static",
-          "detailHeaderFieldValue": "Detail",
+          "detailHeaderFieldSource": "dataBound",
+          "detailHeaderField": "placa",
+          "detailSubHeaderField": "modelo",
+          "detailDescriptionField": "poliza",
           "addItemForm": true,
-          "addScreenHeaderValue": "Nuevo Vehiculo",
+          "addScreenHeaderValue": "Agregar Vehiculo",
           "editItemForm": false
         }
       ],

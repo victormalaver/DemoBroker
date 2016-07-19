@@ -11,7 +11,7 @@
         </div>
     </header>
     <!--     data-bind="{ events: {click: siniestroModel.itemClick} }" -->
-    <ul class="masterDetailView" data-role="listview" data-auto-bind="false" data-style="inset" data-template="siniestroModelTemplate" data-bind="{ source: siniestroModel.dataSource }" data-pull-to-refresh="false" data-endless-scroll="false">
+    <ul class="masterDetailView" data-role="listview" data-auto-bind="false" data-style="inset" data-template="siniestroModelTemplate" data-bind="{ source: siniestroModel.dataSource, events: {click: siniestroModel.itemClick} }" data-pull-to-refresh="false" data-endless-scroll="false">
     </ul>
     <!-- START_CUSTOM_CODE_siniestroModel -->
     <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
@@ -22,7 +22,6 @@
             <h3>#: data['tipoExpanded'].nombre # - #: data['tipoExpanded'].categoria #</h3> #}# # if (data['vehiculoExpanded']) { #
             <p>#: data['vehiculoExpanded'].placa #</p>
             # } #
-            <p>Llamar <a onclick="MakeCall(#: data['numero'] #)">#: data['numero'] #</a></p>
         </div>
     </script>
 </div>

@@ -137,6 +137,17 @@ app.siniestro = kendo.observable({
             },
             detailsShow: function (e) {
                 siniestroModel.setCurrentItemByUid(e.view.params.uid);
+                var dsBrooker = app.brooker.brookerModel.dataSource;
+                dsBrooker.fetch(function () {
+                    var brooker = dsBrooker.get($("#brookerExpanded").text());
+                    $("#brookerExpanded").text(brooker.nombre);
+                });
+                var dsAseguradora = app.aseguradora.aseguradoraModel.dataSource;
+                dsAseguradora.fetch(function () {
+                    var aseguradora = dsAseguradora.get($("#aseguradoraExpanded").text());
+                    $("#aseguradoraExpanded").text(aseguradora.nombre);
+                });
+
             },
             setCurrentItemByUid: function (uid) {
                 var item = uid,
@@ -146,10 +157,10 @@ app.siniestro = kendo.observable({
                 if (!itemModel.tipo) {
                     itemModel.tipo = String.fromCharCode(160);
                 }
+                itemModel.CreatedAt = kendo.toString(itemModel.CreatedAt, "d/M/yyyy h:mm:ss tt")
 
                 siniestroModel.set('originalItem', itemModel);
-                siniestroModel.set('currentItem',
-                    siniestroModel.fixHierarchicalData(itemModel));
+                siniestroModel.set('currentItem', siniestroModel.fixHierarchicalData(itemModel));
 
                 return itemModel;
             },

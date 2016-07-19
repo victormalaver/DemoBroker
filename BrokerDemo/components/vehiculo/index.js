@@ -181,6 +181,7 @@ app.vehiculo = kendo.observable({
                 aseguradoraAdd: '',
                 modelo: '',
                 placa: '',
+                polizaAdd: '',
             });
 
             //cargamos ds aseguradora 
@@ -212,6 +213,7 @@ app.vehiculo = kendo.observable({
                     aseguradora: $("#aseguradoraAdd option:selected").val(),
                     modelo: addFormData.modelo,
                     placa: addFormData.placa,
+                    poliza: addFormData.poliza,
                 },
                 filter = vehiculoModel && vehiculoModel.get('paramFilter'),
                 dataSource = vehiculoModel.get('dataSource');

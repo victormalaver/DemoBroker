@@ -2,20 +2,40 @@
     <header data-role="header">
         <div data-role="navbar" class="header-text">
             <a data-role="backbutton" data-align="left">Back</a>
-            <span>Detail</span>
+            <span data-bind="text: currentItem['placa']"></span>
         </div>
     </header>
-
     <div class="details-content">
         <div class="km-listview-wrapper">
             <ul class="km-listview km-list km-listinset details-fields">
-
-
+                <li>
+                    Modelo:
+                    <h3 data-bind="text: currentItem.modelo"></h3>
+                </li>
+                <li>
+                    Placa:
+                    <h3 data-bind="text: currentItem.placa"></h3>
+                </li>
+                <li>
+                    Poliza:
+                    <p data-bind="text: currentItem.poliza"></p>
+                </li>
+                <li class="detail-content-item">
+                    <div class="editableListItem">
+                        <div>Aseguradora</div>
+                        <div data-bind="html: currentItem.aseguradoraExpanded.nombre"></div>
+                    </div>
+                </li>
+                <li class="detail-content-item">
+                    <div class="editableListItem">
+                        <div>Brooker</div>
+                        <div data-bind="html: currentItem.brookerExpanded.nombre"></div>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
     <!-- START_CUSTOM_CODE_vehiculoModel -->
     <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
-
     <!-- END_CUSTOM_CODE_vehiculoModel -->
 </div>

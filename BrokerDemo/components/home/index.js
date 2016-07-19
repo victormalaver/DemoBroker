@@ -13,7 +13,7 @@ app.home = kendo.observable({
     var provider = app.data.brokerDemo,
         mode = 'signin',
         registerRedirect = 'home',
-        signinRedirect = 'siniestro',
+        signinRedirect = 'vehiculo',
         rememberKey = 'brokerDemo_authData_homeModel',
         init = function(error) {
             if (error) {

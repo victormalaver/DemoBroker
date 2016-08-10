@@ -335,7 +335,10 @@
 #detalle-siniestro ul .detail-content-item .editableListItem div, 
 
 #detalle-siniestro-generado ul li span,
-#detalle-siniestro-generado .detail-content-item .editableListItem div {
+#detalle-siniestro-generado .detail-content-item .editableListItem div,
+
+#detalle-vehiculo ul li span,
+#detalle-vehiculo .detail-content-item .editableListItem div {
     width: 50% !important;
     float: left !important;
     font-size: 16px;
@@ -357,7 +360,11 @@
 #detalle-siniestro-generado ul .detail-content-item .editableListItem #fcha-reporte,
 #detalle-siniestro-generado ul .detail-content-item .editableListItem #aseguradoraExpandedCreated, 
 #detalle-siniestro-generado ul .detail-content-item .editableListItem #brookerExpandedCreated, 
-#detalle-siniestro-generado ul .detail-content-item .editableListItem #fch-creacion {
+#detalle-siniestro-generado ul .detail-content-item .editableListItem #fch-creacion,
+ 
+#detalle-vehiculo ul li h3,
+#detalle-vehiculo ul .detail-content-item .editableListItem #aseguradora-vehiculo, 
+#detalle-vehiculo ul .detail-content-item .editableListItem #brooker-vehiculo {
     width: 50% !important;
     float: right !important;
     padding: 10px 0px;
@@ -373,7 +380,7 @@
     margin: 0px !important;
     background: #00b0d2;
     border-radius: 30px !important;
-    height: 50px !important;
+    height: 50px !important; 
     -webkit-box-shadow: 0px 7px 0px 0px #009bb9 !important;
 }
 

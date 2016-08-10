@@ -330,3 +330,8 @@
 
 
 /* END_CUSTOM_CODE_kendoUiMobileApp */
+
+
+#appDrawer div.km-view-title{
+    background: "styles/marsh-logo.png";
+}

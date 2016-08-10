@@ -1,0 +1,42 @@
+<div data-role="view" data-title="Mis Vehículos" data-layout="main" data-model="app.consulta" data-show="app.consulta.onShow" data-after-show="app.consulta.afterShow">
+
+    <!-- START_CUSTOM_CODE_consulta -->
+    <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
+
+    <!-- END_CUSTOM_CODE_consulta -->
+    <header data-role="header">
+        <div data-role="navbar" class="header-text">
+            <a data-role="backbutton" data-align="left" class="backButtonWrapper" style="display: none;">Back</a>
+            <span data-role="view-title"></span>
+
+            <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
+
+
+            <a data-role="button" data-align="right" data-bind="events: { click: consultaModel.addClick }">Agregar</a>
+
+        </div>
+    </header>
+    <ul class="masterDetailView" data-role="listview" data-auto-bind="false" data-style="inset" data-template="consultaModelTemplate" data-bind="{ source: consultaModel.dataSource, events: {click: consultaModel.itemClick} }" data-pull-to-refresh="false" data-endless-scroll="false">
+    </ul>
+    <script type="text/x-kendo-template" id="consultaModelTemplate">
+        <div class="image-with-text">
+            # data = app.consulta.consultaModel.fixHierarchicalData(data); #
+
+            <h3>#: data['placa'] #</h3>
+            <p>#: data['marca'] # - #: data['modelo'] #</p>
+        </div>
+    </script>
+</div>
+<div data-role="modalview" data-model="app.siniestro.addItemViewModel" id="modalview-alert-consulta" style="width: 70%;height: 400px;" data-modal="false">
+    <div data-role="header">
+        <div data-role="navbar">
+            <span>Confirmar el vehículo</span>
+        </div>
+    </div>
+    <ul data-role="listview" data-style="inset">
+        <li id="contentAlertConsulta" class="form-content-item" style="text-align: center;"></li>
+        <li class="form-content-item">
+                <input id="consultaAdd" style="display: block;width: 100%;text-align: center;" data-bind="value: addFormData.consultaAdd" placeholder="Placa del vehículo" type="text">
+        </li>
+    </ul>
+</div>

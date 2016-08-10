@@ -235,9 +235,14 @@ app.siniestro = kendo.observable({
             L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
-
+			
+            var myIcon = L.icon({
+                iconUrl: 'mapa/images/marker.png',
+                iconAnchor: [12, 0],
+            });
             var marker = L.marker(miLatLong, {
-                    draggable: 'true'
+                    draggable: 'true',
+                	icon: myIcon
                 }).addTo(map)
                 .bindPopup('Si no se encuentra en la posición establecida puede arrastrar el icono, y dejar pulsado en su posición.', {maxWidth: 200, closeOnClick: true})
             	.openPopup();
@@ -274,7 +279,7 @@ app.siniestro = kendo.observable({
             });
         },
         setLatLong: function (e) {
-            // $("#contentAlertHome").html("Ha ocurrido un error, si tiene dudas contáctenos.");
+            $("#contentAlertHome").html("¿Para qué vehículo estás pidiendo asistencia");
             openModal('modalview-alert-home');
             // $("#map").css("display", "none");
             // $("#setLatLong").css("display", "none");

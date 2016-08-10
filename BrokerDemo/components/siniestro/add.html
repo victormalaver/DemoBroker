@@ -12,34 +12,35 @@
     <div id="editableListForm2" class="form-view">
         <div id="divmap"></div>
         <div id="map"></div>
-        <a id="setLatLong" style="position: absolute;z-index: 9999999;bottom: 0px;background-color:#10c4b2;width:99%;color:#fff;" data-role="button" data-bind="events: { click: setLatLong }">Solicitar Asistencia</a>
+        <a id="setLatLong" style="position: absolute;z-index: 9999999;bottom: 0px;background-color:#00b0d2;width:99%;color:#fff;" data-role="button" data-bind="events: { click: setLatLong }">Solicitar Asistencia</a>
         <!-- START_CUSTOM_CODE_editableListForm2 -->
         <!-- END_CUSTOM_CODE_editableListForm2 -->
     </div>
 </div>
-<div data-role="modalview" data-model="app.siniestro.addItemViewModel" id="modalview-alert-home" style="width: 70%;height: 300px;" data-modal="false">
+<div data-role="modalview" data-model="app.siniestro.addItemViewModel" id="modalview-alert-home" style="width: 70%;height: 400px;" data-modal="false">
     <div data-role="header">
         <div data-role="navbar">
-            <span>Mensaje</span>
+            <span>Confirmar el vehículo</span>
         </div>
     </div>
-    <!--     <ul data-role="listview" data-style="inset">
-        <li id="contentAlertHome" class="form-content-item"></li>
-    </ul> -->
+    <ul data-role="listview" data-style="inset">
+        <li id="contentAlertHome" class="form-content-item" style="text-align: center;"></li>
+    </ul>
     <form id="formAddSiniestro">
         <ul class="form-content" data-role="listview" data-style="inset">
-            <li class="form-content-item">
-                <label class="km-label-above">
-                        <span>Tipo</span> 
-                        <select id="tipo"></select>
-                    </label>
-            </li>
             <li class="form-content-item">
                 <label class="km-label-above">
                         <span>Vehículo</span>
                         <select id="vehiculo"></select>
                     </label>
             </li>
+            <li class="form-content-item">
+                <label class="km-label-above">
+                        <span>Tipo</span> 
+                        <select id="tipo"></select>
+                    </label>
+            </li>
+            
             <li class="form-content-item" style="display:none;">
                 <label class="km-label-above">
 

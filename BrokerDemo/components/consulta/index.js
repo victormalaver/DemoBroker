@@ -4,6 +4,7 @@ app.consulta = kendo.observable({
     onShow: function () {},
     afterShow: function () {}
 });
+var data = localStorage.getItem('placasAsignadas');
 (function (parent) {
     var dataProvider = app.data.brokerDemo,
         fetchFilteredData = function (paramFilter, searchFilter) {
@@ -76,6 +77,7 @@ app.consulta = kendo.observable({
             serverFiltering: true,
         },
         dataSource = new kendo.data.DataSource(dataSourceOptions),
+        dataSourceLocal = data,
         consultaModel = kendo.observable({
             dataSource: dataSource,
             fixHierarchicalData: function (data) {
@@ -126,38 +128,77 @@ app.consulta = kendo.observable({
                 return result;
             },
             itemClick: function (e) {
-                var dataItem = e.dataItem || consultaModel.originalItem;
-
-                app.mobileApp.navigate('#components/consulta/details.html?uid=' + dataItem.uid);
-
+                // console.log(e);
+                // console.log(e.item);
+                // console.log(e.item[0]);
+                // console.log(e.item[0].attributes);
+                // console.log(e.item[0].attributes[0]);
+                // console.log(e.item[0].attributes[0].value);
+                // var dataItem = e.dataItem || consultaModel.originalItem;
+                app.mobileApp.navigate('#components/consulta/details.html?uid=' + e.item[0].attributes[0].value);
             },
             addClick: function () {
                 // app.mobileApp.navigate('#components/consulta/add.html');
                 $("#contentAlertConsulta").html("Placa del vehículo:");
-            	openModal('modalview-alert-consulta');
+                openModal('modalview-alert-consulta');
+            },
+            onSelectClick: function (e) {
+                var placa = $("#consultaAdd").val().toUpperCase(),
+                    dataSource = consultaModel.get('dataSource'),
+                    itemModel;
+
+                dataSource.fetch(function () {
+                    var data = this.data();
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].placa.toUpperCase() == placa) {
+                            $("#consultaAdd").val("");
+                            itemModel = data[i];
+                        }
+                    }
+                    if ($("#consultaAdd").val() !== "") {
+                        $("#contentAlertConsulta").html("Placa no registrada");
+                        $("#consultaAdd").addClass("error");
+                    } else {
+                        $("#contentAlertConsulta").html("Placa del vehículo:");
+                        $("#consultaAdd").removeClass("error");
+                        asignarPlaca(itemModel);
+                        closeModal('modalview-alert-consulta');
+                        cargarDataLocal();
+                    }
+                });
             },
             detailsShow: function (e) {
                 consultaModel.setCurrentItemByUid(e.view.params.uid);
             },
             setCurrentItemByUid: function (uid) {
+
                 var item = uid,
                     dataSource = consultaModel.get('dataSource'),
-                    itemModel = dataSource.getByUid(item);
+                    itemModel;
+                console.log(dataSource);
+                dataSource.fetch(function () {
+                    var data = this.data();
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].Id == item) {
+                            itemModel = data[i];
+                        }
+                    }
 
-                if (!itemModel.placa) {
-                    itemModel.placa = String.fromCharCode(160);
-                }
-                if (itemModel.vip) {
-                    itemModel.vip = "Si"
-                }else{
-                    itemModel.vip = "No"
-                }
+                    if (!itemModel.placa) {
+                        itemModel.placa = String.fromCharCode(160);
+                    }
+                    if (itemModel.vip) {
+                        itemModel.vip = "Si"
+                    } else {
+                        itemModel.vip = "No"
+                    }
 
-                consultaModel.set('originalItem', itemModel);
-                consultaModel.set('currentItem',
-                    consultaModel.fixHierarchicalData(itemModel));
+                    consultaModel.set('originalItem', itemModel);
+                    consultaModel.set('currentItem',
+                        consultaModel.fixHierarchicalData(itemModel));
 
-                return itemModel;
+                    return itemModel;
+                });
             },
             linkBind: function (linkString) {
                 var linkChunks = linkString.split('|');
@@ -220,7 +261,7 @@ app.consulta = kendo.observable({
                     poliza: addFormData.polizaAdd,
                     marca: addFormData.marcaAdd,
                     anio: addFormData.anioAdd,
-                    vip:  ($("#vipAdd").data("kendoMobileButtonGroup").current().index()==1?true:false)
+                    vip: ($("#vipAdd").data("kendoMobileButtonGroup").current().index() == 1 ? true : false)
                 },
                 filter = consultaModel && consultaModel.get('paramFilter'),
                 dataSource = consultaModel.get('dataSource');
@@ -259,7 +300,48 @@ app.consulta = kendo.observable({
         }
 
         fetchFilteredData(param);
-        
+        cargarDataLocal();
     });
 
 })(app.consulta);
+
+function asignarPlaca(itemModel) {
+    var placa = itemModel.placa;
+    if (localStorage.getItem("placasAsignadas") != undefined) {
+        var placasGuardadas = JSON.parse(localStorage.getItem('placasAsignadas'));
+        for (var i = 0; i < placasGuardadas.length; i++) {
+            if (placasGuardadas[i].placa == placa) {
+                $("#contentAlertConsulta").html("Placa YA ESTÁ registrada");
+                $("#consultaAdd").addClass("error");
+                return;
+            }
+        }
+        placasGuardadas.push(itemModel);
+        localStorage.setItem("placasAsignadas", JSON.stringify(placasGuardadas));
+        var placasAsignadas = localStorage.getItem('placasAsignadas');
+        var data = placasAsignadas;
+    } else {
+        var nuevaPlaca = [itemModel];
+        localStorage.setItem("placasAsignadas", JSON.stringify(nuevaPlaca));
+        var placasAsignadas = localStorage.getItem('placasAsignadas');
+        var data = placasAsignadas;
+    }
+}
+
+function cargarDataLocal() {
+    var html = [];
+    if (localStorage.getItem("placasAsignadas") != undefined) {
+        var placasGuardadas = JSON.parse(localStorage.getItem('placasAsignadas'));
+        for (var i = 0; i < placasGuardadas.length; i++) {
+            html.push('<li data-uid="' + placasGuardadas[i].Id + '">' +
+                '<div class="image-with-text">' +
+                '<h3>' + placasGuardadas[i].placa + '</h3>' +
+                '<p>' + placasGuardadas[i].marca + '-' + placasGuardadas[i].modelo + '</p>' +
+                '</div>' +
+                '</li>');
+        }
+        $("#masterDetailViewLocal").html(html);
+    } else {
+        $("#masterDetailViewLocal").html("");
+    }
+}

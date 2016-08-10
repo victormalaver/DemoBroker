@@ -1,4 +1,4 @@
-<div data-role="view" data-title="Details" data-model="app.vehiculo.vehiculoModel" data-bind="events: { show: detailsShow }" id="vehiculoModelDetailsView">
+<div data-role="view" data-title="Detalle" data-model="app.consulta.consultaModel" data-bind="events: { show: detailsShow }" id="consultaModelDetailsView">
     <header data-role="header">
         <div data-role="navbar" class="header-text">
             <a data-role="backbutton" data-align="left">Back</a>
@@ -8,6 +8,10 @@
     <div class="details-content">
         <div class="km-listview-wrapper">
             <ul class="km-listview km-list km-listinset details-fields">
+                <li>
+                    Nombre:
+                    <h3 data-bind="text: currentItem.nombre"></h3>
+                </li>
                 <li>
                     Marca:
                     <h3 data-bind="text: currentItem.marca"></h3>

@@ -5,9 +5,17 @@
             <span>Detalle del Asistencia</span>
         </div>
     </header>
-    <div class="details-content">
+    <div class="details-content"> 
         <div id="detalle-siniestro-generado" class="km-listview-wrapper">
             <ul class="km-listview km-list km-listinset details-fields">
+                <li>
+                    <span>Nombre:</span>
+                    <h3 data-bind="text: currentItem.vehiculoExpanded.nombre"></h3>
+                </li>
+                <li>
+                    <span>Marca:</span>
+                    <h3 data-bind="text: currentItem.vehiculoExpanded.marca"></h3>
+                </li>
                 <li>
                     <span>Modelo:</span>
                     <h3 data-bind="text: currentItem.vehiculoExpanded.modelo"></h3>
@@ -15,10 +23,6 @@
                 <li>
                     <span>Placa:</span>
                     <h3 data-bind="text: currentItem.vehiculoExpanded.placa"></h3>
-                </li>
-                <li>
-                    <span>Marca:</span>
-                    <h3 data-bind="text: currentItem.vehiculoExpanded.marca"></h3>
                 </li>   
                 <li>
                     <span>Año:</span>
@@ -38,11 +42,18 @@
                         <div id="aseguradoraExpandedCreated" data-bind="html: currentItem.vehiculoExpanded.aseguradora"></div>
                     </div>
                 </li>
-                <li class="detail-content-item">
+                <li class="detail-content-item" style="display:none;">
                     <div class="editableListItem">
                         <div>Asesor</div>
                         <div id="brookerExpandedCreated" data-bind="html: currentItem.vehiculoExpanded.brooker"></div>
                     </div> 
+                </li>
+                <li class="detail-content-item">
+                    <div class="editableListItem">
+                        <div>Número</div>
+                        <div id="brookerExpandedCreated" data-bind="html: currentItem.numero"></div>
+                        <div id="brookerExpandedCreated" data-bind="html: currentItem.vehiculoExpanded.vip"></div>
+                    </div>
                 </li>
                 <!--li class="detail-content-item">
                     <div class="editableListItem">

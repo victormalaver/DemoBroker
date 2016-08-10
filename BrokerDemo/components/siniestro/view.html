@@ -19,7 +19,7 @@
     <script type="text/x-kendo-template" id="siniestroModelTemplate">
         <div class="image-with-text">
             # data = app.siniestro.siniestroModel.fixHierarchicalData(data); # # if (data['tipoExpanded']) {#
-            <h3>#: data['tipoExpanded'].nombre # - #: data['tipoExpanded'].categoria #</h3> #}# # if (data['vehiculoExpanded']) { #
+            <h3>#: data['tipoExpanded'].nombre # - #= kendo.toString(kendo.parseDate(data['tipoExpanded'].CreatedAt, 'dd-MM-yyyy h:mm:ss tt'), 'dd/MM/yyyy h:mm:ss tt') #</h3> #}# # if (data['vehiculoExpanded']) { #
             <p>#: data['vehiculoExpanded'].placa #</p>
             # } #
         </div>

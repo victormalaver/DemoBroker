@@ -516,3 +516,7 @@ select#soflow-color {
 }
 
 /* combos */
+
+.error{
+    border: solid 3px tomato !important;
+}

@@ -156,43 +156,76 @@ app.siniestro = kendo.observable({
                 if (!itemModel.tipo) {
                     itemModel.tipo = String.fromCharCode(160);
                 }
-                itemModel.CreatedAt = kendo.toString(itemModel.CreatedAt, "d/M/yyyy h:mm:ss tt")
+                var dsAseguradora = app.aseguradora.aseguradoraModel.dataSource;
+                dsAseguradora.fetch(function () {
+                    var aseguradora = dsAseguradora.get(itemModel.vehiculoExpanded.aseguradora);
+                    itemModel.vehiculoExpanded.aseguradora = aseguradora.nombre;
+                    if (itemModel.vehiculoExpanded.vip) {
+                        itemModel.vehiculoExpanded.vip = "Ejecutivo VIP Marsh";
+                        itemModel.CreatedAt = kendo.toString(itemModel.CreatedAt, "d/M/yyyy h:mm:ss tt");
+                        siniestroModel.set('originalItem', itemModel);
+                        siniestroModel.set('currentItem', siniestroModel.fixHierarchicalData(itemModel));
+                        return itemModel;
+                    } else {
+                        if (itemModel.tipoExpanded.categoria == "Aseguradora") {
+                            itemModel.vehiculoExpanded.vip = aseguradora.nombre + " Call Center";
+                            itemModel.CreatedAt = kendo.toString(itemModel.CreatedAt, "d/M/yyyy h:mm:ss tt");
+                            siniestroModel.set('originalItem', itemModel);
+                            siniestroModel.set('currentItem', siniestroModel.fixHierarchicalData(itemModel));
+                            return itemModel;
+                        } else {
+                            itemModel.vehiculoExpanded.vip = "Ejecutivo Marsh";
+                            itemModel.CreatedAt = kendo.toString(itemModel.CreatedAt, "d/M/yyyy h:mm:ss tt");
+                            siniestroModel.set('originalItem', itemModel);
+                            siniestroModel.set('currentItem', siniestroModel.fixHierarchicalData(itemModel));
+                            return itemModel;
+                        }
+                    }
 
-                siniestroModel.set('originalItem', itemModel);
-                siniestroModel.set('currentItem', siniestroModel.fixHierarchicalData(itemModel));
-
-                return itemModel;
+                });
             },
             setCurrentItemCreated: function (e) {
-                var item = e.data.uid,
-                    dataSource = siniestroModel.get('dataSource');
+                var item = e.view.params.uid,
+                    dataSource = siniestroModel.get('dataSource'),
+                    itemModel;
                 dataSource.fetch(function () {
-                    var itemModel = dataSource.at(0);
+                    itemModel = dataSource.at(dataSource.total() - 1);;
                     if (!itemModel.tipo) {
                         itemModel.tipo = String.fromCharCode(160);
                     }
-                    if (itemModel.vehiculoExpanded.vip) {
-                        itemModel.vehiculoExpanded.vip = "Si"
-                    }else{
-                        itemModel.vehiculoExpanded.vip = "No"
-                    }
-                    itemModel.CreatedAt = kendo.toString(itemModel.CreatedAt, "d/M/yyyy h:mm:ss tt")
-
-                    siniestroModel.set('originalItem', itemModel);
-                    siniestroModel.set('currentItem', siniestroModel.fixHierarchicalData(itemModel));
-					
-                    var dsBrooker = app.brooker.brookerModel.dataSource;
-                    dsBrooker.fetch(function () {
-                        var brooker = dsBrooker.get($("#brookerExpandedCreated").text());
-                        $("#brookerExpandedCreated").text(brooker.nombre);
-                    });
                     var dsAseguradora = app.aseguradora.aseguradoraModel.dataSource;
                     dsAseguradora.fetch(function () {
-                        var aseguradora = dsAseguradora.get($("#aseguradoraExpandedCreated").text());
-                        $("#aseguradoraExpandedCreated").text(aseguradora.nombre);
+                        var aseguradora = dsAseguradora.get(itemModel.vehiculoExpanded.aseguradora);
+                        itemModel.vehiculoExpanded.aseguradora = aseguradora.nombre;
+                        if (itemModel.vehiculoExpanded.vip) {
+                            // itemModel.vehiculoExpanded.vip = "Si"
+                            itemModel.vehiculoExpanded.vip = "Ejecutivo VIP Marsh";
+                            itemModel.CreatedAt = kendo.toString(itemModel.CreatedAt, "d/M/yyyy h:mm:ss tt");
+                            siniestroModel.set('originalItem', itemModel);
+                            siniestroModel.set('currentItem', siniestroModel.fixHierarchicalData(itemModel));
+                            return itemModel;
+                        } else {
+                            // itemModel.vehiculoExpanded.vip = "No"
+                            if (itemModel.tipoExpanded.categoria == "Aseguradora") {
+                                itemModel.vehiculoExpanded.vip = aseguradora.nombre + " Call Center";
+                                itemModel.CreatedAt = kendo.toString(itemModel.CreatedAt, "d/M/yyyy h:mm:ss tt");
+                                siniestroModel.set('originalItem', itemModel);
+                                siniestroModel.set('currentItem', siniestroModel.fixHierarchicalData(itemModel));
+                                return itemModel;
+                            } else {
+                                itemModel.vehiculoExpanded.vip = "Ejecutivo Marsh";
+                                itemModel.CreatedAt = kendo.toString(itemModel.CreatedAt, "d/M/yyyy h:mm:ss tt");
+                                siniestroModel.set('originalItem', itemModel);
+                                siniestroModel.set('currentItem', siniestroModel.fixHierarchicalData(itemModel));
+                                return itemModel;
+                            }
+                        }
+                        itemModel.CreatedAt = kendo.toString(itemModel.CreatedAt, "d/M/yyyy h:mm:ss tt")
+                        siniestroModel.set('originalItem', itemModel);
+                        siniestroModel.set('currentItem', siniestroModel.fixHierarchicalData(itemModel));
+                        return itemModel;
                     });
-                    
-                    return itemModel;
+
                 });
 
             },
@@ -214,69 +247,91 @@ app.siniestro = kendo.observable({
 
     parent.set('addItemViewModel', kendo.observable({
         onShow: function (e) {
-            // Reset the form data.
-            $("#formAddSiniestro").css("display", "none");
-            $("#setLatLong").css("display", "block");
-            $("#map").css("display", "block");
-            //mapa
-            $("#map").remove();
-            var divmap = "<div id='map'></div>"
-            $("#divmap").after(divmap);
-            var alto = $(window).height() - $("#siniestroModelAddItemView .km-header").height() - $("#setLatLong").height();
-            $("#map").css("height", alto + "px");
+            navigator.geolocation.getCurrentPosition(function (position) {
+                    miLatLong = [parseFloat(position.coords.latitude), parseFloat(position.coords.longitude)];
+                    if (miLatLong.length > 0) {
+                        // Reset the form data.
+                        $("#formAddSiniestro").css("display", "none");
+                        $("#setLatLong").css("display", "block");
+                        $("#map").css("display", "block");
+                        //mapa
+                        $("#map").remove();
+                        var divmap = "<div id='map'></div>"
+                        $("#divmap").after(divmap);
+                        var alto = $(window).height() - $("#siniestroModelAddItemView .km-header").height() - $("#setLatLong").height();
+                        $("#map").css("height", alto + "px");
 
-            if (miLatLong.length > 0) {
-                var map = L.map('map').setView(miLatLong, 18);
-            } else {
-                miLatLong = [parseFloat(-12.0553016), parseFloat(-77.062695)];
-                var map = L.map('map').setView(miLatLong, 18);
-            }
+                        if (miLatLong.length > 0) {
+                            var map = L.map('map').setView(miLatLong, 18);
+                        } else {
+                            miLatLong = [parseFloat(-12.0553016), parseFloat(-77.062695)];
+                            var map = L.map('map').setView(miLatLong, 18);
+                        }
 
-            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-			
-            var myIcon = L.icon({
-                iconUrl: 'mapa/images/marker.png',
-                iconAnchor: [12, 0],
-            });
-            var marker = L.marker(miLatLong, {
-                    draggable: 'true',
-                	icon: myIcon
-                }).addTo(map)
-                .bindPopup('Si no se encuentra en la posición establecida puede arrastrar el icono, y dejar pulsado en su posición.', {maxWidth: 200, closeOnClick: true})
-            	.openPopup();
-            marker.on("dragend", function (ev) {
-                var chagedPos = ev.target.getLatLng();
-                this.bindPopup(chagedPos.toString()).openPopup();
+                        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                        }).addTo(map);
 
-                var latlong = chagedPos.toString().replace("LatLng(", "").replace(")", "");
-                var miLatitud = latlong.substring(0, latlong.indexOf(","));
-                var miLongitud = latlong.substring(latlong.indexOf(",") + 1, latlong.length);
-                $("#latitud").val(miLatitud);
-                $("#longitud").val(miLongitud);
-            });
+                        var myIcon = L.icon({
+                            iconUrl: 'mapa/images/marker.png',
+                            iconAnchor: [12, 0],
+                        });
+                        var marker = L.marker(miLatLong, {
+                                draggable: 'true',
+                                icon: myIcon
+                            }).addTo(map)
+                            .bindPopup('Si no se encuentra en la posición establecida puede arrastrar el icono, y dejar pulsado en su posición.', {
+                                maxWidth: 200,
+                                closeOnClick: true
+                            })
+                            .openPopup();
+                        marker.on("dragend", function (ev) {
+                            var chagedPos = ev.target.getLatLng();
+                            this.bindPopup(chagedPos.toString()).openPopup();
 
-            //cargamos ds tipo 
-            var dsTipos = app.tipos.tiposModel.dataSource;
-            dsTipos.fetch(function () {
-                var html = [];
-                var data = dsTipos.data();
-                for (var i = 0; i < data.length; i++) {
-                    html.push('<option value="' + data[i].Id + '" categoria="' + data[i].categoria + '" >' + data[i].nombre + '</option>');
-                }
-                $("#tipo").html(html);
-            });
-            //cargamos ds vehiculo 
-            var dsVehiculo = app.vehiculo.vehiculoModel.dataSource;
-            dsVehiculo.fetch(function () {
-                var html = [];
-                var data = dsVehiculo.data();
-                for (var i = 0; i < data.length; i++) {
-                    html.push('<option value="' + data[i].Id + '" vip="' + data[i].vip + '" brooker="' + data[i].brooker + '" aseguradora="' + data[i].aseguradora + '">' + data[i].placa + '</option>');
-                }
-                $("#vehiculo").html(html);
-            });
+                            var latlong = chagedPos.toString().replace("LatLng(", "").replace(")", "");
+                            var miLatitud = latlong.substring(0, latlong.indexOf(","));
+                            var miLongitud = latlong.substring(latlong.indexOf(",") + 1, latlong.length);
+                            $("#latitud").val(miLatitud);
+                            $("#longitud").val(miLongitud);
+                        });
+
+                        //cargamos ds tipo 
+                        var dsTipos = app.tipos.tiposModel.dataSource;
+                        dsTipos.fetch(function () {
+                            var html = [];
+                            var data = dsTipos.data();
+                            for (var i = 0; i < data.length; i++) {
+                                html.push('<option value="' + data[i].Id + '" categoria="' + data[i].categoria + '" >' + data[i].nombre + '</option>');
+                            }
+                            $("#tipo").html(html);
+                        });
+                        //cargamos ds vehiculo 
+                        if (localStorage.getItem("placasAsignadas") != undefined) {
+                            var placasGuardadas = JSON.parse(localStorage.getItem('placasAsignadas'));
+                            var html = [];
+                            for (var i = 0; i < placasGuardadas.length; i++) {
+                                html.push('<option value="' + placasGuardadas[i].Id + '" vip="' + placasGuardadas[i].vip + '" brooker="' + placasGuardadas[i].brooker + '" aseguradora="' + placasGuardadas[i].aseguradora + '">' + placasGuardadas[i].placa + '</option>');
+                            }
+                            $("#vehiculo").html(html);
+                        }
+
+                        // var dsVehiculo = app.vehiculo.vehiculoModel.dataSource;
+                        // dsVehiculo.fetch(function () {
+                        //     var html = [];
+                        //     var data = dsVehiculo.data();
+                        //     for (var i = 0; i < data.length; i++) {
+                        //         html.push('<option value="' + data[i].Id + '" vip="' + data[i].vip + '" brooker="' + data[i].brooker + '" aseguradora="' + data[i].aseguradora + '">' + data[i].placa + '</option>');
+                        //     }
+                        //     $("#vehiculo").html(html);
+                        // });
+                    } else {
+                        alert("Error");
+                    }
+                },
+                function (error) {
+                    alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+                });
         },
         setLatLong: function (e) {
             $("#contentAlertHome").html("Seleccione un vehículo y asi Solicitar Asistencia");
@@ -293,6 +348,12 @@ app.siniestro = kendo.observable({
             }
         },
         onSaveClick: function (e) {
+            if ($("#formAddSiniestro #vehiculo option:selected").text() == "") {
+                $("#contentAlert").html("Debe asignar un vehículo");
+                closeModal('modalview-alert-home');
+                openModal('modalview-alert');
+                return;
+            }
             kendo.mobile.application.showLoading();
             var num = "";
             if ($("#tipo option:selected").attr("categoria") == "Brooker") {
@@ -301,7 +362,9 @@ app.siniestro = kendo.observable({
                     var data = dsBrooker.data();
                     for (var i = 0; i < data.length; i++) {
                         if ($("#vehiculo option:selected").attr("brooker") == data[i].Id) {
-                            num = $("#vehiculo option:selected").attr("vip") == "true" ? "998393954" : data[i].numero;
+                            num = $("#vehiculo option:selected").attr("vip").toString() == "true" ? "998393954" : data[i].numero;
+                            console.log($("#vehiculo option:selected").attr("vip").toString());
+                            console.log(num);
                             var addModel = {
                                     longitud: $("#longitud").val(),
                                     latitud: $("#latitud").val(),
@@ -314,7 +377,9 @@ app.siniestro = kendo.observable({
                             dataSource.add(addModel);
                             dataSource.sync();
                             dataSource.one('change', function (e) {
-                                app.mobileApp.navigate('#components/siniestro/siniestro.html');
+                                console.log(e);
+                                console.log(e.items[0].Id);
+                                app.mobileApp.navigate('#components/siniestro/siniestro.html?uid=' + e.items[0].Id);
                                 kendo.mobile.application.hideLoading();
                             });
                         }
@@ -326,7 +391,9 @@ app.siniestro = kendo.observable({
                     var data = dsAseguradora.data();
                     for (var i = 0; i < data.length; i++) {
                         if ($("#vehiculo option:selected").attr("aseguradora") == data[i].Id) {
-                            num = $("#vehiculo option:selected").attr("vip") == "true" ? "998393954" : data[i].numero;
+                            num = $("#vehiculo option:selected").attr("vip").toString() == "true" ? "998393954" : data[i].numero;
+                            console.log($("#vehiculo option:selected").attr("vip").toString());
+                            console.log(num);
                             var addModel = {
                                     longitud: $("#longitud").val(),
                                     latitud: $("#latitud").val(),
@@ -339,7 +406,8 @@ app.siniestro = kendo.observable({
                             dataSource.add(addModel);
                             dataSource.sync();
                             dataSource.one('change', function (e) {
-                                app.mobileApp.navigate('#components/siniestro/siniestro.html');
+                                console.log(e.items[0].Id);
+                                app.mobileApp.navigate('#components/siniestro/siniestro.html?uid=' + e.items[0].Id);
                                 kendo.mobile.application.hideLoading();
                             });
                         }

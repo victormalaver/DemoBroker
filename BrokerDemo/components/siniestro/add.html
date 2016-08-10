@@ -1,7 +1,7 @@
 <div data-role="view" data-title="Add" data-model="app.siniestro.addItemViewModel" data-bind="events: { show: onShow }" id="siniestroModelAddItemView">
     <header data-role="header">
         <div data-role="navbar" class="header-text">
-            <span>Reportar Siniestro</span>
+            <span>Marsh Rehder</span>
             <!--             <a data-role="backbutton" data-align="left">Cancel</a> -->
             <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
             <!--             <a data-role="button" data-align="right" data-bind="events: { click: onSaveClick }">Save</a> -->
@@ -31,13 +31,17 @@
             <li class="form-content-item">
                 <label class="km-label-above">
                         <span>Vehículo</span>
-                        <select id="vehiculo"></select>
+                    	<div class="styled-select blue semi-square">
+                            <select id="vehiculo"></select>
+                    	</div>
                     </label>
             </li>
             <li class="form-content-item">
                 <label class="km-label-above">
                         <span>Tipo</span> 
-                        <select id="tipo"></select>
+                    	<div class="styled-select blue semi-square">
+                        	<select id="tipo"></select>
+                        </div>
                     </label>
             </li>
             
@@ -59,7 +63,7 @@
             </li>
             </br>
             </br>
-            <a data-role="button" style="display: block;" data-bind="events: { click: onSaveClick }">Confirmar Siniestro</a>
+            <a data-role="button" style="display: block;" data-bind="events: { click: onSaveClick }">Confirmar Asistencia</a>
         </ul>
     </form>
 </div>

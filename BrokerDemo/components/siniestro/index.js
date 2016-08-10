@@ -279,7 +279,7 @@ app.siniestro = kendo.observable({
             });
         },
         setLatLong: function (e) {
-            $("#contentAlertHome").html("¿Para qué vehículo estás pidiendo asistencia");
+            $("#contentAlertHome").html("Seleccione un vehículo y asi Solicitar Asistencia");
             openModal('modalview-alert-home');
             // $("#map").css("display", "none");
             // $("#setLatLong").css("display", "none");

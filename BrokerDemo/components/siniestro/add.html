@@ -17,7 +17,7 @@
         <!-- END_CUSTOM_CODE_editableListForm2 -->
     </div>
 </div>
-<div data-role="modalview" id="modalview-alert-home" style="width: 70%;height: 400px;" data-modal="false">
+<div data-role="modalview" data-model="app.siniestro.addItemViewModel" id="modalview-alert-home" style="width: 70%;height: 300px;" data-modal="false">
     <div data-role="header">
         <div data-role="navbar">
             <span>Mensaje</span>
@@ -61,7 +61,4 @@
             <a data-role="button" style="display: block;" data-bind="events: { click: onSaveClick }">Confirmar Siniestro</a>
         </ul>
     </form>
-    <div class="button-group">
-        <a data-role="button" class="primary" onclick="closeModal('modalview-alert-home')">Confirmar siniestro</a>
-    </div>
 </div>

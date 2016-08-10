@@ -239,8 +239,8 @@ app.siniestro = kendo.observable({
             var marker = L.marker(miLatLong, {
                     draggable: 'true'
                 }).addTo(map)
-                .bindPopup('Mi ubicación<br> Arrastre la marca.')
-                .openPopup();
+                .bindPopup('Si no se encuentra en la posición establecida puede arrastrar el icono, y dejar pulsado en su posición.', {maxWidth: 200, closeOnClick: true})
+            	.openPopup();
             marker.on("dragend", function (ev) {
                 var chagedPos = ev.target.getLatLng();
                 this.bindPopup(chagedPos.toString()).openPopup();

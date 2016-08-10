@@ -10,8 +10,9 @@ var miLatLong;
             app.mobileApp = new kendo.mobile.Application(document.body, {
                 skin: 'flat',
                 initial: 'components/home/view.html'
-            });
+            }); 
         });
+        
     };
 
     if (window.cordova) {
@@ -34,6 +35,7 @@ var miLatLong;
             }
 
             bootstrap();
+             
         }, false);
     } else {
         bootstrap();
@@ -77,4 +79,16 @@ var miLatLong;
 function MakeCall(numero) {
     //Handle to Cordoba lib
     window.open('tel:' + numero, '_system')
+}
+
+function closeModal(modal) {
+    // $("#" + modal + " .primary.km-widget.km-button").removeAttr("onclick");
+    $("#" + modal).kendoMobileModalView("close");
+}
+
+function openModal(modal) {
+    var mv = $("#" + modal).data("kendoMobileModalView");
+    mv.shim.popup.options.animation.open.effects = "zoom";
+    mv.open();
+    // setTimeout($("#" + modal + " .primary.km-widget.km-button").attr("onclick", "closeModal('" + modal + "')"), 1500);
 }

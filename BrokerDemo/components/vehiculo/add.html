@@ -14,9 +14,9 @@
                 <li class="form-content-item">
                     <label class="km-label-above">
 
-                        <span>Placa</span>
+                        <span>Marca</span>
 
-                        <input id="placa" data-bind="value: addFormData.placa" placeholder="Escriba la placa del vehiculo" type="text">
+                        <input id="marcaAdd" data-bind="value: addFormData.marcaAdd" placeholder="Marca del vehículo" type="text">
                     </label>
                 </li>
                 <li class="form-content-item">
@@ -24,7 +24,23 @@
 
                         <span>Modelo</span>
 
-                        <input id="modelo" data-bind="value: addFormData.modelo" placeholder="Modelo del vehiculo" type="text">
+                        <input id="modelo" data-bind="value: addFormData.modelo" placeholder="Modelo del vehículo" type="text">
+                    </label>
+                </li>
+                <li class="form-content-item">
+                    <label class="km-label-above">
+
+                        <span>Año</span>
+
+                        <input id="anioAdd" data-bind="value: addFormData.anioAdd" placeholder="Año del vehículo" type="text">
+                    </label>
+                </li>
+                <li class="form-content-item">
+                    <label class="km-label-above">
+
+                        <span>Placa</span>
+
+                        <input id="placa" data-bind="value: addFormData.placa" placeholder="Placa del vehículo" type="text">
                     </label>
                 </li>
                 <li class="form-content-item">
@@ -38,7 +54,7 @@
                 <li class="form-content-item">
                     <label class="km-label-above">
 
-                        <span>Brooker</span>
+                        <span>Asesor</span>
 
                         <select id="brookerAdd" data-bind="value: addFormData.brookerAdd"></select>
                     </label>
@@ -49,6 +65,15 @@
                         <span>Número de poliza</span>
 
                         <input id="polizaAdd" data-bind="value: addFormData.polizaAdd" placeholder="Número de póliza" type="text">
+                    </label>
+                </li>
+                <li class="form-content-item">
+                    <label class="km-label-above">
+                        
+                        <ul  data-role="buttongroup" id="vipAdd" data-index="0">
+                            <li>Cliente Standar</li>
+                            <li>Cliente Vip</li>
+                        </ul>
                     </label>
                 </li>
             </ul>

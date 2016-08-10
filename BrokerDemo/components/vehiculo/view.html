@@ -1,4 +1,4 @@
-<div data-role="view" data-title="Vehículo" data-layout="main" data-model="app.vehiculo" data-show="app.vehiculo.onShow" data-after-show="app.vehiculo.afterShow">
+<div data-role="view" data-title="Mis Vehículos" data-layout="main" data-model="app.vehiculo" data-show="app.vehiculo.onShow" data-after-show="app.vehiculo.afterShow">
 
     <!-- START_CUSTOM_CODE_vehiculo -->
     <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
@@ -16,22 +16,14 @@
 
         </div>
     </header>
-
-
     <ul class="masterDetailView" data-role="listview" data-auto-bind="false" data-style="inset" data-template="vehiculoModelTemplate" data-bind="{ source: vehiculoModel.dataSource, events: {click: vehiculoModel.itemClick} }" data-pull-to-refresh="false" data-endless-scroll="false">
     </ul>
-
-
-    <!-- START_CUSTOM_CODE_vehiculoModel -->
-    <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
-
-    <!-- END_CUSTOM_CODE_vehiculoModel -->
     <script type="text/x-kendo-template" id="vehiculoModelTemplate">
         <div class="image-with-text">
             # data = app.vehiculo.vehiculoModel.fixHierarchicalData(data); #
 
             <h3>#: data['placa'] #</h3>
-            <p>#: data['modelo'] #</p>
+            <p>#: data['marca'] # - #: data['modelo'] #</p>
         </div>
     </script>
 </div>

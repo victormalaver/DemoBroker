@@ -4,11 +4,6 @@ app.vehiculo = kendo.observable({
     onShow: function () {},
     afterShow: function () {}
 });
-
-// START_CUSTOM_CODE_vehiculo
-// Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
-
-// END_CUSTOM_CODE_vehiculo
 (function (parent) {
     var dataProvider = app.data.brokerDemo,
         fetchFilteredData = function (paramFilter, searchFilter) {
@@ -150,6 +145,11 @@ app.vehiculo = kendo.observable({
                 if (!itemModel.placa) {
                     itemModel.placa = String.fromCharCode(160);
                 }
+                if (itemModel.vip) {
+                    itemModel.vip = "Si"
+                }else{
+                    itemModel.vip = "No"
+                }
 
                 vehiculoModel.set('originalItem', itemModel);
                 vehiculoModel.set('currentItem',
@@ -182,6 +182,8 @@ app.vehiculo = kendo.observable({
                 modelo: '',
                 placa: '',
                 polizaAdd: '',
+                anioAdd: '',
+                marca: ''
             });
 
             //cargamos ds aseguradora 
@@ -194,7 +196,7 @@ app.vehiculo = kendo.observable({
                 }
                 $("#aseguradoraAdd").html(html);
             });
-             
+
             //cargamos ds brooker 
             var dsBrooker = app.brooker.brookerModel.dataSource;
             dsBrooker.fetch(function () {
@@ -214,6 +216,9 @@ app.vehiculo = kendo.observable({
                     modelo: addFormData.modelo,
                     placa: addFormData.placa,
                     poliza: addFormData.polizaAdd,
+                    marca: addFormData.marcaAdd,
+                    anio: addFormData.anioAdd,
+                    vip:  ($("#vipAdd").data("kendoMobileButtonGroup").current().index()==1?true:false)
                 },
                 filter = vehiculoModel && vehiculoModel.get('paramFilter'),
                 dataSource = vehiculoModel.get('dataSource');
@@ -252,11 +257,7 @@ app.vehiculo = kendo.observable({
         }
 
         fetchFilteredData(param);
+        
     });
 
 })(app.vehiculo);
-
-// START_CUSTOM_CODE_vehiculoModel
-// Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
-
-// END_CUSTOM_CODE_vehiculoModel

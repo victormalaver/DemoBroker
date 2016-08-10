@@ -12,8 +12,8 @@ app.home = kendo.observable({
 (function(parent) {
     var provider = app.data.brokerDemo,
         mode = 'signin',
-        registerRedirect = 'home',
-        signinRedirect = 'vehiculo',
+        registerRedirect = 'home/view.html',
+        signinRedirect = 'siniestro/add.html',
         rememberKey = 'brokerDemo_authData_homeModel',
         init = function(error) {
             if (error) {
@@ -71,7 +71,7 @@ app.home = kendo.observable({
                 app.user = data.result;
 
                 setTimeout(function() {
-                    app.mobileApp.navigate('components/' + redirect + '/view.html');
+                    app.mobileApp.navigate('components/' + redirect);
                 }, 0);
             } else {
                 init();

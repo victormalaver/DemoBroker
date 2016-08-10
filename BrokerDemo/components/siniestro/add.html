@@ -2,7 +2,8 @@
     <header data-role="header">
         <div data-role="navbar" class="header-text">
             <span>Reportar Siniestro</span>
-            <a data-role="backbutton" data-align="left">Cancel</a>
+            <!--             <a data-role="backbutton" data-align="left">Cancel</a> -->
+            <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
             <!--             <a data-role="button" data-align="right" data-bind="events: { click: onSaveClick }">Save</a> -->
         </div>
     </header>
@@ -11,43 +12,56 @@
     <div id="editableListForm2" class="form-view">
         <div id="divmap"></div>
         <div id="map"></div>
-        <a id="setLatLong" style="position: absolute;z-index: 9999999;bottom: 0px;background-color:#10c4b2;width:99%;color:#fff;" data-role="button" data-bind="events: { click: setLatLong }">Reportar Siniestro</a>
-        <form id="formAddSiniestro">
-            <ul class="form-content" data-role="listview" data-style="inset">
-                <li class="form-content-item">
-                    <label class="km-label-above">
+        <a id="setLatLong" style="position: absolute;z-index: 9999999;bottom: 0px;background-color:#10c4b2;width:99%;color:#fff;" data-role="button" data-bind="events: { click: setLatLong }">Solicitar Asistencia</a>
+        <!-- START_CUSTOM_CODE_editableListForm2 -->
+        <!-- END_CUSTOM_CODE_editableListForm2 -->
+    </div>
+</div>
+<div data-role="modalview" id="modalview-alert-home" style="width: 70%;height: 400px;" data-modal="false">
+    <div data-role="header">
+        <div data-role="navbar">
+            <span>Mensaje</span>
+        </div>
+    </div>
+    <!--     <ul data-role="listview" data-style="inset">
+        <li id="contentAlertHome" class="form-content-item"></li>
+    </ul> -->
+    <form id="formAddSiniestro">
+        <ul class="form-content" data-role="listview" data-style="inset">
+            <li class="form-content-item">
+                <label class="km-label-above">
                         <span>Tipo</span> 
                         <select id="tipo"></select>
                     </label>
-                </li>
-                <li class="form-content-item">
-                    <label class="km-label-above">
+            </li>
+            <li class="form-content-item">
+                <label class="km-label-above">
                         <span>Vehículo</span>
                         <select id="vehiculo"></select>
                     </label>
-                </li>
-                <li class="form-content-item">
-                    <label class="km-label-above">
+            </li>
+            <li class="form-content-item" style="display:none;">
+                <label class="km-label-above">
 
                         <span>Latitud</span>
 
                         <input id="latitud"  placeholder="Latitud" type="text">
                     </label>
-                </li>
-                <li class="form-content-item">
-                    <label class="km-label-above">
+            </li>
+            <li class="form-content-item" style="display:none;">
+                <label class="km-label-above">
 
                         <span>Longitud</span>
 
                         <input id="longitud" placeholder="Longitud" type="text">
                     </label>
-                </li>
-                </br>
-                </br>
-                    <a data-role="button" data-align="right" data-bind="events: { click: onSaveClick }">Confirmar Reporte</a>
-            </ul>
-        </form>
-        <!-- START_CUSTOM_CODE_editableListForm2 -->
-        <!-- END_CUSTOM_CODE_editableListForm2 -->
+            </li>
+            </br>
+            </br>
+            <a data-role="button" style="display: block;" data-bind="events: { click: onSaveClick }">Confirmar Siniestro</a>
+        </ul>
+    </form>
+    <div class="button-group">
+        <a data-role="button" class="primary" onclick="closeModal('modalview-alert-home')">Confirmar siniestro</a>
     </div>
 </div>

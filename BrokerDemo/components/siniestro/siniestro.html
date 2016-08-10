@@ -1,4 +1,4 @@
-<div data-role="view" data-title="Details" data-model="app.siniestro.siniestroModel" data-bind="events: { show: detailsShow }" id="siniestroModelDetailsView">
+<div data-role="view" data-title="Details" data-model="app.siniestro.siniestroModel" data-bind="events: { show: setCurrentItemCreated }" id="siniestroModelDetailsCreated">
     <header data-role="header">
         <div data-role="navbar" class="header-text">
             <a data-role="backbutton" data-align="left">Back</a>
@@ -9,6 +9,10 @@
         <div class="km-listview-wrapper">
             <ul class="km-listview km-list km-listinset details-fields">
                 <li>
+                    Marca:
+                    <h3 data-bind="text: currentItem.vehiculoExpanded.marca"></h3>
+                </li>
+                <li>
                     Modelo:
                     <h3 data-bind="text: currentItem.vehiculoExpanded.modelo"></h3>
                 </li>
@@ -17,19 +21,27 @@
                     <h3 data-bind="text: currentItem.vehiculoExpanded.placa"></h3>
                 </li>
                 <li>
+                    Año:
+                    <h3 data-bind="text: currentItem.vehiculoExpanded.anio"></h3>
+                </li>
+                <li>
                     Poliza:
-                    <p data-bind="text: currentItem.vehiculoExpanded.poliza"></p>
+                    <h3 data-bind="text: currentItem.vehiculoExpanded.poliza"></h3>
+                </li>
+                <li>
+                    Vip:
+                    <h3 data-bind="text: currentItem.vehiculoExpanded.vip"></h3>
                 </li>
                 <li class="detail-content-item">
                     <div class="editableListItem">
                         <div>Aseguradora</div>
-                        <div id="aseguradoraExpanded" data-bind="html: currentItem.vehiculoExpanded.aseguradora"></div>
+                        <div id="aseguradoraExpandedCreated" data-bind="html: currentItem.vehiculoExpanded.aseguradora"></div>
                     </div>
                 </li>
                 <li class="detail-content-item">
                     <div class="editableListItem">
                         <div>Asesor</div>
-                        <div id="brookerExpanded" data-bind="html: currentItem.vehiculoExpanded.brooker"></div>
+                        <div id="brookerExpandedCreated" data-bind="html: currentItem.vehiculoExpanded.brooker"></div>
                     </div>
                 </li>
                 <li class="detail-content-item">
@@ -38,9 +50,9 @@
                         <div data-bind="html: currentItem.CreatedAt"></div>
                     </div>
                 </li>
-                <li class="detail-content-item"  style="text-align:center;" onclick="MakeCall($('#numeroLlamada').text())">
+                <li class="detail-content-item"  style="text-align:center;" onclick="MakeCall($('#numeroLlamadaCreated').text())">
                     <div class="editableListItem"  style="text-align:center;">
-                        <div id="numeroLlamada" style="display:none;" data-bind="html: currentItem.numero"></div>
+                        <div id="numeroLlamadaCreated" style="display:none;" data-bind="html: currentItem.numero"></div>
                         <img src="styles/phone.png"></img>
                     	<h3>Llamar</h3>
                     </div>
@@ -48,4 +60,7 @@
             </ul>
         </div>
     </div>
+    <!-- START_CUSTOM_CODE_siniestroModel -->
+    <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
+    <!-- END_CUSTOM_CODE_siniestroModel -->
 </div>

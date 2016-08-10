@@ -9,8 +9,16 @@
         <div class="km-listview-wrapper">
             <ul class="km-listview km-list km-listinset details-fields">
                 <li>
+                    Marca:
+                    <h3 data-bind="text: currentItem.marca"></h3>
+                </li>
+                <li>
                     Modelo:
                     <h3 data-bind="text: currentItem.modelo"></h3>
+                </li>
+                <li>
+                    Año:
+                    <h3 data-bind="text: currentItem.anio"></h3>
                 </li>
                 <li>
                     Placa:
@@ -18,7 +26,11 @@
                 </li>
                 <li>
                     Poliza:
-                    <p data-bind="text: currentItem.poliza"></p>
+                    <h3 data-bind="text: currentItem.poliza"></h3>
+                </li>
+                <li>
+                    Vip:
+                    <h3 data-bind="text: currentItem.vip"></h3>
                 </li>
                 <li class="detail-content-item">
                     <div class="editableListItem">
@@ -28,7 +40,7 @@
                 </li>
                 <li class="detail-content-item">
                     <div class="editableListItem">
-                        <div>Brooker</div>
+                        <div>Asesor</div>
                         <div data-bind="html: currentItem.brookerExpanded.nombre"></div>
                     </div>
                 </li>

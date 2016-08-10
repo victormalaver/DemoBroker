@@ -2,15 +2,14 @@
   "ProjectName": "BrokerDemo",
   "ProjectGuid": "0d38ee85-a832-4deb-afdd-55ecd3a730ea",
   "projectVersion": 1,
-  "AppIdentifier": "com.telerik.BrokerDemo",
-  "DisplayName": "BrokerDemo",
+  "AppIdentifier": "com.telerik.demo",
+  "DisplayName": "Marsh Rehder",
   "Author": "",
-  "Description": "BrokerDemo",
+  "Description": "Marsh Rehder",
   "BundleVersion": "1.0",
   "AndroidVersionCode": "1",
   "iOSDeviceFamily": [
-    "1",
-    "2"
+    "1"
   ],
   "iOSBackgroundMode": [],
   "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
@@ -19,8 +18,7 @@
     "android.permission.INTERNET"
   ],
   "DeviceOrientations": [
-    "Portrait",
-    "Landscape"
+    "Portrait"
   ],
   "AndroidHardwareAcceleration": "true",
   "iOSStatusBarStyle": "Default",

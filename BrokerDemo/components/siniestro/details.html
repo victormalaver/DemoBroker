@@ -2,23 +2,23 @@
     <header data-role="header">
         <div data-role="navbar" class="header-text">
             <a data-role="backbutton" data-align="left">Back</a>
-            <span>Detalle del Siniestro</span>
+            <span>Detalle de la Asistencia</span>
         </div>
     </header>
     <div class="details-content">
-        <div class="km-listview-wrapper">
+        <div id="detalle-siniestro" class="km-listview-wrapper">
             <ul class="km-listview km-list km-listinset details-fields">
                 <li>
-                    Modelo:
+                    <span>Modelo:</span>
                     <h3 data-bind="text: currentItem.vehiculoExpanded.modelo"></h3>
                 </li>
                 <li>
-                    Placa:
+                    <span>Placa:</span>
                     <h3 data-bind="text: currentItem.vehiculoExpanded.placa"></h3>
                 </li>
                 <li>
-                    Poliza:
-                    <p data-bind="text: currentItem.vehiculoExpanded.poliza"></p>
+                    <span>Poliza:</span>
+                    <h3 data-bind="text: currentItem.vehiculoExpanded.poliza"></h3>
                 </li>
                 <li class="detail-content-item">
                     <div class="editableListItem">
@@ -35,14 +35,19 @@
                 <li class="detail-content-item">
                     <div class="editableListItem">
                         <div>Fecha de reporte</div>
-                        <div data-bind="html: currentItem.CreatedAt"></div>
+                        <div id="fcha-reporte" data-bind="html: currentItem.CreatedAt"></div>
                     </div>
                 </li>
-                <li class="detail-content-item"  style="text-align:center;" onclick="MakeCall($('#numeroLlamada').text())">
-                    <div class="editableListItem"  style="text-align:center;">
+                <li class="detail-content-item"  style="text-align:center; height: 80px !important;" onclick="MakeCall($('#numeroLlamada').text())">
+                    <div id="btn-llamar" class="editableListItem"  style="text-align:center;">
                         <div id="numeroLlamada" style="display:none;" data-bind="html: currentItem.numero"></div>
                         <img src="styles/phone.png"></img>
-                    	<h3>Llamar</h3>
+                    	<span style="color: white !important;
+    font-weight: normal;
+    width: 60% !important;
+    float: left !important;
+    margin: 0 !important;
+    padding: 15px !important;">Llamar</span>
                     </div>
                 </li>
             </ul>

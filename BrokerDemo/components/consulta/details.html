@@ -6,46 +6,46 @@
         </div>
     </header>
     <div class="details-content">
-        <div class="km-listview-wrapper">
+        <div id="detalle-vehiculo" class="km-listview-wrapper">
             <ul class="km-listview km-list km-listinset details-fields">
                 <li>
-                    Nombre:
+                    <span>Nombre:</span>
                     <h3 data-bind="text: currentItem.nombre"></h3>
                 </li>
                 <li>
-                    Marca:
+                    <span>Marca:</span>
                     <h3 data-bind="text: currentItem.marca"></h3>
                 </li>
                 <li>
-                    Modelo:
+                    <span>Modelo:</span>
                     <h3 data-bind="text: currentItem.modelo"></h3>
                 </li>
                 <li>
-                    Año:
-                    <h3 data-bind="text: currentItem.anio"></h3>
-                </li>
-                <li>
-                    Placa:
+                    <span>Placa:</span>
                     <h3 data-bind="text: currentItem.placa"></h3>
                 </li>
                 <li>
-                    Poliza:
+                    <span>Año:</span>
+                    <h3 data-bind="text: currentItem.anio"></h3>
+                </li> 
+                <li>
+                    <span>Poliza:</span>
                     <h3 data-bind="text: currentItem.poliza"></h3>
                 </li>
-                <li>
+                <li style="display:none !important;">
                     Vip:
                     <h3 data-bind="text: currentItem.vip"></h3>
                 </li>
                 <li class="detail-content-item">
                     <div class="editableListItem">
                         <div>Aseguradora</div>
-                        <div data-bind="html: currentItem.aseguradoraExpanded.nombre"></div>
+                        <div id="aseguradora-vehiculo" data-bind="html: currentItem.aseguradoraExpanded.nombre"></div>
                     </div>
                 </li>
                 <li class="detail-content-item">
                     <div class="editableListItem">
                         <div>Asesor</div>
-                        <div data-bind="html: currentItem.brookerExpanded.nombre"></div>
+                        <div id="brooker-vehiculo" data-bind="html: currentItem.brookerExpanded.nombre"></div>
                     </div>
                 </li>
             </ul>

@@ -128,22 +128,22 @@ var data = localStorage.getItem('placasAsignadas');
                 return result;
             },
             itemClick: function (e) {
-                // console.log(e);
-                // console.log(e.item);
-                // console.log(e.item[0]);
-                // console.log(e.item[0].attributes);
-                // console.log(e.item[0].attributes[0]);
-                // console.log(e.item[0].attributes[0].value);
-                // var dataItem = e.dataItem || consultaModel.originalItem;
                 app.mobileApp.navigate('#components/consulta/details.html?uid=' + e.item[0].attributes[0].value);
             },
             addClick: function () {
                 // app.mobileApp.navigate('#components/consulta/add.html');
                 $("#contentAlertConsulta").html("Placa del vehículo:");
                 openModal('modalview-alert-consulta');
+                $("#consultaAdd").removeClass("error");
             },
             onSelectClick: function (e) {
-                var placa = $("#consultaAdd").val().toUpperCase(),
+                if ($("#consultaAdd").val() == "") {
+                    $("#consultaAdd").addClass("error");
+                    return;
+                } else {
+					$("#consultaAdd").removeClass("error");
+                }
+                var placa = $("#modalview-alert-consulta #consultaAdd").val().toUpperCase(),
                     dataSource = consultaModel.get('dataSource'),
                     itemModel;
 
@@ -175,7 +175,6 @@ var data = localStorage.getItem('placasAsignadas');
                 var item = uid,
                     dataSource = consultaModel.get('dataSource'),
                     itemModel;
-                console.log(dataSource);
                 dataSource.fetch(function () {
                     var data = this.data();
                     for (var i = 0; i < data.length; i++) {
@@ -215,65 +214,6 @@ var data = localStorage.getItem('placasAsignadas');
             },
             currentItem: {}
         });
-
-    parent.set('addItemViewModel', kendo.observable({
-        onShow: function (e) {
-            // Reset the form data.
-            this.set('addFormData', {
-                brookerAdd: '',
-                aseguradoraAdd: '',
-                modelo: '',
-                placa: '',
-                polizaAdd: '',
-                anioAdd: '',
-                marca: ''
-            });
-
-            //cargamos ds aseguradora 
-            var dsAseguradora = app.aseguradora.aseguradoraModel.dataSource;
-            dsAseguradora.fetch(function () {
-                var html = [];
-                var data = dsAseguradora.data();
-                for (var i = 0; i < data.length; i++) {
-                    html.push('<option value="' + data[i].Id + '">' + data[i].nombre + '</option>');
-                }
-                $("#aseguradoraAdd").html(html);
-            });
-
-            //cargamos ds brooker 
-            var dsBrooker = app.brooker.brookerModel.dataSource;
-            dsBrooker.fetch(function () {
-                var html = [];
-                var data = dsBrooker.data();
-                for (var i = 0; i < data.length; i++) {
-                    html.push('<option value="' + data[i].Id + '">' + data[i].nombre + '</option>');
-                }
-                $("#brookerAdd").html(html);
-            });
-        },
-        onSaveClick: function (e) {
-            var addFormData = this.get('addFormData'),
-                addModel = {
-                    brooker: $("#brookerAdd option:selected").val(),
-                    aseguradora: $("#aseguradoraAdd option:selected").val(),
-                    modelo: addFormData.modelo,
-                    placa: addFormData.placa,
-                    poliza: addFormData.polizaAdd,
-                    marca: addFormData.marcaAdd,
-                    anio: addFormData.anioAdd,
-                    vip: ($("#vipAdd").data("kendoMobileButtonGroup").current().index() == 1 ? true : false)
-                },
-                filter = consultaModel && consultaModel.get('paramFilter'),
-                dataSource = consultaModel.get('dataSource');
-
-            dataSource.add(addModel);
-            dataSource.one('change', function (e) {
-                app.mobileApp.navigate('#:back');
-            });
-
-            dataSource.sync();
-        }
-    }));
 
     if (typeof dataProvider.sbProviderReady === 'function') {
         dataProvider.sbProviderReady(function dl_sbProviderReady() {

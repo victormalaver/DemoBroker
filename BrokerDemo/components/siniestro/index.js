@@ -61,7 +61,7 @@ app.siniestro = kendo.observable({
             error: function (e) {
 
                 if (e.xhr) {
-                    alert(JSON.stringify(e.xhr));
+                    // alert(JSON.stringify(e.xhr));
                 }
             },
             schema: {
@@ -198,14 +198,14 @@ app.siniestro = kendo.observable({
                         var aseguradora = dsAseguradora.get(itemModel.vehiculoExpanded.aseguradora);
                         itemModel.vehiculoExpanded.aseguradora = aseguradora.nombre;
                         if (itemModel.vehiculoExpanded.vip) {
-                            // itemModel.vehiculoExpanded.vip = "Si"
+                            itemModel.vehiculoExpanded.vip = "Si"
                             itemModel.vehiculoExpanded.vip = "Ejecutivo VIP Marsh";
                             itemModel.CreatedAt = kendo.toString(itemModel.CreatedAt, "d/M/yyyy h:mm:ss tt");
                             siniestroModel.set('originalItem', itemModel);
                             siniestroModel.set('currentItem', siniestroModel.fixHierarchicalData(itemModel));
                             return itemModel;
                         } else {
-                            // itemModel.vehiculoExpanded.vip = "No"
+                            itemModel.vehiculoExpanded.vip = "No"
                             if (itemModel.tipoExpanded.categoria == "Aseguradora") {
                                 itemModel.vehiculoExpanded.vip = aseguradora.nombre + " Call Center";
                                 itemModel.CreatedAt = kendo.toString(itemModel.CreatedAt, "d/M/yyyy h:mm:ss tt");

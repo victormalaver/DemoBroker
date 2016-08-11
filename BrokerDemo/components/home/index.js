@@ -18,7 +18,7 @@ app.home = kendo.observable({
         init = function (error) {
             if (error) {
                 if (error.message) {
-                    alert(error.message);
+                    //alert(error.message);
                 }
                 return false;
             }

@@ -86,7 +86,7 @@ app.brooker = kendo.observable({
             error: function(e) {
 
                 if (e.xhr) {
-                    alert(JSON.stringify(e.xhr));
+                    // alert(JSON.stringify(e.xhr));
                 }
             },
             schema: {

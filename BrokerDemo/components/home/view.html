@@ -1,10 +1,11 @@
-<div data-role="view" data-title="Login" data-layout="main" data-model="app.home" data-show="app.home.onShow" data-after-show="app.home.afterShow">
+<div data-role="view" data-layout="main" data-model="app.home" data-show="app.home.onShow" data-after-show="app.home.afterShow">
     <header data-role="header">
         <div data-role="navbar" class="header-text">
             <span data-role="view-title"></span>
         </div>
     </header>
     <div class="signin-view">
+        <img src="styles/marsh-logo.png" style="width: 100%;margin-top: 10%;padding: 5%;" />
         <form>
             <ul data-role="listview" data-style="inset">
                 <li>
@@ -25,9 +26,23 @@
             </ul>
             <div class="button-group button-group-vertical">
                 <a data-role="button" class="primary" data-bind="events: { click: homeModel.signin }">Ingresar</a>
-<!--                 <a data-role="button" data-bind="events: { click: homeModel.toggleView }">Crear cuenta</a> -->
+                <!--                 <a data-role="button" data-bind="events: { click: homeModel.toggleView }">Crear cuenta</a> -->
             </div>
         </form>
+        </br>
+        </br>
+        <div style="text-align:center;">
+            <label style="margin:1em;">Si no tiene ususario y contraseña llame a nuestra central de atención</label>
+        </div>
+        <div style="padding: 0px 15px;margin-top: 16px;">
+            <li class="detail-content-item" style="list-style: none;text-align: center;height: 80px !important;" onclick="MakeCall($('#numeroLlamadaCentral').text())">
+                <div class="editableListItem" style="text-align:center;">
+                    <div id="numeroLlamadaCentral" style="display:none;">987654321</div>
+                    <img src="styles/phone.png"></img>
+                    <span class="btnLlamar">Llamar</span>
+                </div>
+            </li>
+        </div>
     </div>
     <div class="signup-view" style="display:none;">
         <form>
@@ -62,13 +77,13 @@
     <div data-role="header">
         <div data-role="navbar">
             <span>Mensaje</span>
-<!--             <a onclick="closeModal('modalview-alert-home')" data-role="button" data-align="right"><span class="flaticon-close"></span></a> -->
+            <!--             <a onclick="closeModal('modalview-alert-home')" data-role="button" data-align="right"><span class="flaticon-close"></span></a> -->
         </div>
     </div>
     <ul data-role="listview" data-style="inset">
         <li id="contentAlert" class="form-content-item"></li>
     </ul>
     <div class="button-group">
-        <a data-role="button" class="primary"  onclick="closeModal('modalview-alert')" >Aceptar</a>
+        <a data-role="button" class="primary" onclick="closeModal('modalview-alert')">Aceptar</a>
     </div>
 </div>

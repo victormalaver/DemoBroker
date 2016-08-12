@@ -12,25 +12,25 @@
     <div id="editableListForm2" class="form-view">
         <div id="divmap"></div>
         <div id="map"></div>
-        <a id="setLatLong" style="position: absolute;z-index: 9999999;bottom: 0px;background-color:#00b0d2;width:99%;color:#fff;" data-role="button" data-bind="events: { click: setLatLong }">Solicitar Asistencia</a>
+        <a id="setLatLong" data-role="button" data-bind="events: { click: setLatLong }">Solicitar Asistencia</a>
         <!-- START_CUSTOM_CODE_editableListForm2 -->
-        <!-- END_CUSTOM_CODE_editableListForm2 -->
+        <!-- END_CUSTOM_CODE_editableListForm2 --> 
     </div>
 </div>
-<div data-role="modalview" data-model="app.siniestro.addItemViewModel" id="modalview-alert-home" style="width: 70%;height: 400px;" data-modal="false">
-    <div data-role="header">
+<div data-role="modalview" data-model="app.siniestro.addItemViewModel" id="modalview-alert-home" style="width: 70%;height: 295px;" data-modal="false">
+<!--     <div data-role="header">
         <div data-role="navbar">
             <span>Confirmar el vehículo</span>
         </div>
     </div>
     <ul data-role="listview" data-style="inset">
         <li id="contentAlertHome" class="form-content-item" style="text-align: center;"></li>
-    </ul>
+    </ul> -->
     <form id="formAddSiniestro">
         <ul class="form-content" data-role="listview" data-style="inset">
             <li class="form-content-item">
                 <label class="km-label-above">
-                        <span>Vehículo</span>
+                        <span>Seleccione el vehículo</span>
                     	<div class="styled-select blue semi-square">
                             <select id="vehiculo"></select>
                     	</div>
@@ -38,59 +38,31 @@
             </li>
             <li class="form-content-item">
                 <label class="km-label-above">
-                        <span>Tipo</span> 
+                        <span>Tipo de Asistencia</span> 
                     	<div class="styled-select blue semi-square">
-                        	<select id="tipo"></select>
+                        	<select id="tipoAsistencia" onchange="changeTipoAsistencia(this.value);">
+                                <option value="Brooker">Siniestro</option>
+                                <option value="Aseguradora">Asistencia mecánica</option>
+                            </select>
                         </div>
                     </label>
             </li>
-            
-            <li class="form-content-item" style="display:none;">
-                <label class="km-label-above">
-
-                        <span>Latitud</span>
-
-                        <input id="latitud"  placeholder="Latitud" type="text">
-                    </label>
-            </li>
-            <li class="form-content-item" style="display:none;">
-                <label class="km-label-above">
-
-                        <span>Longitud</span>
-
-                        <input id="longitud" placeholder="Longitud" type="text">
-                    </label>
-            </li>
-            </br>
-            </br>
-            <a data-role="button" style="display: block;" data-bind="events: { click: onSaveClick }">Confirmar Asistencia</a>
-        </ul>
-    </form>
-</div>
-<div data-role="modalview" data-model="app.siniestro.addItemViewModel" id="modalview-alert-home" style="width: 70%;height: 350px;" data-modal="false">
-    <div data-role="header">
-        <div data-role="navbar">
-            <span>Confirmar el vehículo</span>
-        </div>
-    </div>
-    <ul data-role="listview" data-style="inset">
-        <li id="contentAlertHome" class="form-content-item" style="text-align: center;"></li>
-    </ul>
-    <form id="formAddSiniestro">
-        <ul class="form-content" data-role="listview" data-style="inset">
-            <li class="form-content-item">
-                <label class="km-label-above">
-                        <span>Vehículo</span>
-                        <select id="vehiculo"></select>
-                    </label>
-            </li>
-            <li class="form-content-item">
+            <li class="form-content-item" id="tipoBrookerLi">
                 <label class="km-label-above">
                         <span>Tipo</span> 
-                        <select id="tipo"></select>
+                    	<div class="styled-select blue semi-square">
+                        	<select id="tipoBrooker"></select>
+                        </div>
                     </label>
             </li>
-            
+            <li class="form-content-item" id="tipoAseguradoraLi" style="display:none;">
+                <label class="km-label-above">
+                        <span>Tipo</span> 
+                    	<div class="styled-select blue semi-square">
+                        	<select id="tipoAseguradora"></select>
+                        </div>
+                    </label>
+            </li>
             <li class="form-content-item" style="display:none;">
                 <label class="km-label-above">
 
@@ -108,8 +80,7 @@
                     </label>
             </li>
             </br>
-            </br>
-            <a data-role="button" style="display: block;" data-bind="events: { click: onSaveClick }">Confirmar Siniestro</a>
+            <a data-role="button" style="display: block;" data-bind="events: { click: onSaveClick }">Confirmar Asistencia</a>
         </ul>
     </form>
 </div>

@@ -142,7 +142,7 @@
 /* Shim */
 .km-flat .km-shim,
 .km-phone .km-flat .km-actionsheet-wrapper {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.7);
 }
 /* PopUp */
 .km-flat .km-popup .k-item,

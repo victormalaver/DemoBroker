@@ -8,11 +8,9 @@
     <div class="details-content">
         <div class="km-listview-wrapper">
             <ul class="km-listview km-list km-listinset details-fields">
-                <li class="detail-content-item">
-                    <div class="editableListItem">
-                        <div>Nombre</div>
-                        <div data-bind="html: currentItem.nombre"></div>
-                    </div>
+                <li>
+                    Titular:
+                    <h3 data-bind="text: currentItem.nombre"></h3>
                 </li>
                 <li>
                     Marca:
@@ -21,6 +19,10 @@
                 <li>
                     Modelo:
                     <h3 data-bind="text: currentItem.modelo"></h3>
+                </li>
+                <li>
+                    Color:
+                    <h3 data-bind="text: currentItem.color"></h3>
                 </li>
                 <li>
                     Año:

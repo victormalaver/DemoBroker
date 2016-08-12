@@ -313,7 +313,7 @@
     margin: 0px;
     color: #4c5356 !important;
 }
-div.signin-view  .detail-content-item .editableListItem,
+div.signin-view .detail-content-item .editableListItem,
 #detalle-siniestro ul .detail-content-item #btn-llamar,
 #detalle-siniestro-generado ul .detail-content-item #btn-llamar {
     text-align: center;
@@ -325,12 +325,12 @@ div.signin-view  .detail-content-item .editableListItem,
     height: 50px !important;
     -webkit-box-shadow: 0px 7px 0px 0px #009bb9 !important;
 }
-div.signin-view  .detail-content-item .editableListItem:hover,
+div.signin-view .detail-content-item .editableListItem:hover,
 #detalle-siniestro ul .detail-content-item #btn-llamar:hover,
 #detalle-siniestro-generado ul .detail-content-item #btn-llamar:hover {
     -webkit-box-shadow: none !important;
 }
-div.signin-view  .detail-content-item .editableListItem img,
+div.signin-view .detail-content-item .editableListItem img,
 #detalle-siniestro ul .detail-content-item #btn-llamar img,
 #detalle-siniestro-generado ul .detail-content-item #btn-llamar img {
     height: 35px;
@@ -497,12 +497,12 @@ select#soflow-color {
     position: absolute;
     z-index: 9999999;
     bottom: 0px;
-    background-color: #ff6304;
-    border: solid 1px #ff6304;
+    background-color: #fc4303;
+    border: solid 1px #fc4303;
     width: 99%;
     color: #fff;
-    font-size: 20px;
-    line-height: 20px;
+    font-size: 25px;
+    line-height: 25px;
     margin-bottom: 15px;
 }
 .btnLlamar {
@@ -523,4 +523,9 @@ select#soflow-color {
 #modalview-alert-home li {
     border-color: #fff;
     background-color: #fff;
+}
+#modalview-alert-home label span,
+#modalview-alert-home span.km-text {
+    font-size: 16px;
+    font-weight: bold;
 }

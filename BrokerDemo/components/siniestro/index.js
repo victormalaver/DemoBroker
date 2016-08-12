@@ -319,7 +319,7 @@ app.siniestro = kendo.observable({
                             var placasGuardadas = JSON.parse(localStorage.getItem('placasAsignadas'));
                             var html = [];
                             for (var i = 0; i < placasGuardadas.length; i++) {
-                                html.push('<option value="' + placasGuardadas[i].Id + '" vip="' + placasGuardadas[i].vip + '" brooker="' + placasGuardadas[i].brooker + '" aseguradora="' + placasGuardadas[i].aseguradora + '">' + placasGuardadas[i].placa + " - " + placasGuardadas[i].modelo +  '</option>');
+                                html.push('<option value="' + placasGuardadas[i].Id + '" vip="' + placasGuardadas[i].vip + '" brooker="' + placasGuardadas[i].brooker + '" aseguradora="' + placasGuardadas[i].aseguradora + '">' + placasGuardadas[i].placa + " - " + placasGuardadas[i].marca +  '</option>');
                             }
                             $("#vehiculo").html(html);
                         }

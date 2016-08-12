@@ -183,7 +183,9 @@ app.vehiculo = kendo.observable({
                 placa: '',
                 polizaAdd: '',
                 anioAdd: '',
-                marca: ''
+                marca: '',
+                color: '',
+                titular: ''
             });
 
             //cargamos ds aseguradora 
@@ -218,7 +220,9 @@ app.vehiculo = kendo.observable({
                     poliza: addFormData.polizaAdd,
                     marca: addFormData.marcaAdd,
                     anio: addFormData.anioAdd,
-                    vip:  ($("#vipAdd").data("kendoMobileButtonGroup").current().index()==1?true:false)
+                    vip:  ($("#vipAdd").data("kendoMobileButtonGroup").current().index()==1?true:false),
+                    color: addFormData.color,
+                    nombre: addFormData.titular
                 },
                 filter = vehiculoModel && vehiculoModel.get('paramFilter'),
                 dataSource = vehiculoModel.get('dataSource');

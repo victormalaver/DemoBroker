@@ -13,14 +13,10 @@
                     <h3 data-bind="text: currentItem.vehiculoExpanded.nombre"></h3>
                 </li>
                 <li>
-                    <span>Marca:</span>
-                    <h3 data-bind="text: currentItem.vehiculoExpanded.marca"></h3>
+                    <span>Marca-Modelo:</span>
+                    <h3><tag data-bind="text: currentItem.vehiculoExpanded.marca"></tag> - <tag data-bind="text: currentItem.vehiculoExpanded.modelo"></tag></h3>
                 </li>
-                <li>
-                    <span>Modelo:</span>
-                    <h3 data-bind="text: currentItem.vehiculoExpanded.modelo"></h3>
-                </li>
-                <li>
+                <li> 
                     <span>Color:</span>
                     <h3 data-bind="text: currentItem.vehiculoExpanded.color"></h3>
                 </li>
@@ -61,13 +57,13 @@
                         <div id="fcha-reporte" data-bind="html: currentItem.CreatedAt"></div>
                     </div>
                 </li-->
-                <li class="detail-content-item"  style="text-align:center; height: 80px !important;" onclick="MakeCall($('#numeroLlamada').text())">
+                <!--                 <li class="detail-content-item"  style="text-align:center; height: 80px !important;" onclick="MakeCall($('#numeroLlamada').text())">
                     <div id="btn-llamar" class="editableListItem"  style="text-align:center;">
                         <div id="numeroLlamada" style="display:none;" data-bind="html: currentItem.numero"></div>
                         <img src="styles/phone.png"></img>
                     	<span class="btnLlamar">Llamar</span>
                     </div>
-            </li>
+            </li> -->
             </ul>
         </div>
     </div>

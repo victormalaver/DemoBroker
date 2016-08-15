@@ -497,8 +497,8 @@ select#soflow-color {
     position: absolute;
     z-index: 9999999;
     bottom: 0px;
-    background-color: #fc4303;
-    border: solid 1px #fc4303;
+    background-color: #dc3d03;
+    border: solid 1px #dc3d03;
     width: 99%;
     color: #fff;
     font-size: 25px;

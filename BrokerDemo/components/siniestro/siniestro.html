@@ -5,7 +5,7 @@
             <span>Detalle del Asistencia</span>
         </div>
     </header>
-    <div class="details-content"> 
+    <div class="details-content">
         <div id="detalle-siniestro-generado" class="km-listview-wrapper">
             <ul class="km-listview km-list km-listinset details-fields">
                 <li>
@@ -13,12 +13,8 @@
                     <h3 data-bind="text: currentItem.vehiculoExpanded.nombre"></h3>
                 </li>
                 <li>
-                    <span>Marca:</span>
-                    <h3 data-bind="text: currentItem.vehiculoExpanded.marca"></h3>
-                </li>
-                <li>
-                    <span>Modelo:</span>
-                    <h3 data-bind="text: currentItem.vehiculoExpanded.modelo"></h3>
+                    <span>Marca-Modelo:</span>
+                    <h3><tag data-bind="text: currentItem.vehiculoExpanded.marca"></tag> - <tag data-bind="text: currentItem.vehiculoExpanded.modelo"></tag></h3>
                 </li>
                 <li>
                     <span>Color:</span>
@@ -27,7 +23,7 @@
                 <li>
                     <span>Placa:</span>
                     <h3 data-bind="text: currentItem.vehiculoExpanded.placa"></h3>
-                </li>   
+                </li>
                 <li>
                     <span>Año:</span>
                     <h3 data-bind="text: currentItem.vehiculoExpanded.anio"></h3>
@@ -50,7 +46,7 @@
                     <div class="editableListItem">
                         <div>Asesor</div>
                         <div id="brookerExpandedCreated" data-bind="html: currentItem.vehiculoExpanded.brooker"></div>
-                    </div> 
+                    </div>
                 </li>
                 <li class="detail-content-item">
                     <div class="editableListItem">
@@ -64,12 +60,12 @@
                         <div>Fecha de reporte</div>
                         <div id="fch-creacion" data-bind="html: currentItem.CreatedAt"></div>
                     </div>
-                </li--> 
-                <li class="detail-content-item"  style="text-align:center; height: 80px !important;" onclick="MakeCall($('#numeroLlamadaCreated').text())">
-                    <div id="btn-llamar" class="editableListItem"  style="text-align:center;">
+                </li-->
+                <li class="detail-content-item" style="text-align:center; height: 80px !important;" onclick="MakeCall($('#numeroLlamadaCreated').text())">
+                    <div id="btn-llamar" class="editableListItem" style="text-align:center;">
                         <div id="numeroLlamadaCreated" style="display:none;" data-bind="html: currentItem.numero"></div>
                         <img src="styles/phone.png"></img>
-                    	<span class="btnLlamar">Llamar</span>
+                        <span class="btnLlamar">Llamar</span>
                     </div>
                 </li>
             </ul>

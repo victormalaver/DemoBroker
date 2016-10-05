@@ -340,7 +340,8 @@ div.signin-view .detail-content-item .editableListItem img,
 #formAddSiniestro #vehiculo,
 #formAddSiniestro #tipoAsistencia,
 #formAddSiniestro #tipoBrooker,
-#formAddSiniestro #tipoAseguradora {
+#formAddSiniestro #tipoAseguradora,
+#formAddSiniestro #tipoAseguradora2{
     margin-top: -1px !important;
     margin-left: 1px !important;
     color: white !important;
@@ -495,7 +496,7 @@ select#soflow-color {
 }
 #setLatLong {
     position: absolute;
-    z-index: 9999999;
+    z-index: 600 !important;
     bottom: 0px;
     background-color: #dc3d03;
     border: solid 1px #dc3d03;

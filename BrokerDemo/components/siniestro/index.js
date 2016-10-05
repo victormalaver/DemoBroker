@@ -302,17 +302,22 @@ app.siniestro = kendo.observable({
                         dsTipos.fetch(function () {
                             var htmlBrooker = [];
                             var htmlAseguradora = [];
+                            var htmlAseguradora2 = [];
                             var data = dsTipos.data();
                             for (var i = 0; i < data.length; i++) {
-                                if(data[i].categoria == "Brooker"){
+                                //console.log(data[i].Id + " - " + data[i].categoria + " - " + data[i].nombre);
+                                if(data[i].categoria == "Brooker"){ 
                                 	htmlBrooker.push('<option value="' + data[i].Id + '" categoria="' + data[i].categoria + '" >' + data[i].nombre + '</option>');    
-                                }else{
+                                }else if(data[i].categoria == "Aseguradora"){
                                     htmlAseguradora.push('<option value="' + data[i].Id + '" categoria="' + data[i].categoria + '" >' + data[i].nombre + '</option>');
+                                }else{ 
+                                    htmlAseguradora2.push('<option value="' + data[i].Id + '" categoria="' + data[i].categoria + '" >' + data[i].nombre + '</option>');
                                 }
                                 
                             }
                             $("#tipoBrooker").html(htmlBrooker);
                             $("#tipoAseguradora").html(htmlAseguradora);
+                            $("#tipoAseguradora2").html(htmlAseguradora2);
                         });
                         //cargamos ds vehiculo 
                         if (localStorage.getItem("placasAsignadas") != undefined) {
@@ -457,8 +462,12 @@ function changeTipoAsistencia(value){
     if(value == "Brooker"){
         $("#tipoBrookerLi").css("display","block");
         $("#tipoAseguradoraLi").css("display","none");
-    }else{
+    }else if(value == "Aseguradora"){
         $("#tipoBrookerLi").css("display","none");
         $("#tipoAseguradoraLi").css("display","block");
+    }else {
+        $("#tipoBrookerLi").css("display","none");
+        $("#tipoAseguradoraLi").css("display","none");
+        $("#tipoAseguradora2Li").css("display","block");
     }
 }

@@ -38,11 +38,12 @@
             </li>
             <li class="form-content-item">
                 <label class="km-label-above">
-                        <span style="color:#4c5356">Tipo de Asistencia</span> 
+                        <span style="color:#4c5356">Asistencia Mecánica/Grúa</span> 
                     	<div class="styled-select blue semi-square">
                         	<select id="tipoAsistencia" onchange="changeTipoAsistencia(this.value);">
-                                <option value="Brooker">Siniestro</option>
-                                <option value="Aseguradora">Asistencia mecánica</option>
+                                <option value="Brooker">Accidente</option>
+                                <option value="Aseguradora">Asistencia Mecánica</option>
+                                <option value="Aseguradora2">Chofer Reemplazo</option>
                             </select>
                         </div>
                     </label>
@@ -63,9 +64,17 @@
                         </div>
                     </label>
             </li>
+            <li class="form-content-item" id="tipoAseguradora2Li" style="display:none;">
+                <label class="km-label-above">
+                        <span style="color:#4c5356">Tipo</span> 
+                    	<div class="styled-select blue semi-square">
+                        	<select id="tipoAseguradora2"></select>
+                        </div>
+                    </label>
+            </li>
             <li class="form-content-item" style="display:none;">
                 <label class="km-label-above">
-
+ 
                         <span>Latitud</span>
 
                         <input id="latitud"  placeholder="Latitud" type="text">
@@ -80,7 +89,7 @@
                     </label>
             </li>
             </br>
-            <a data-role="button" style="display: block;" data-bind="events: { click: onSaveClick }">Confirmar Asistencia</a>
+            <a data-role="button" style="display: block; background: #dc3d03 !important; border-color: #dc3d03 !important; color: #ffffff !important;" data-bind="events: { click: onSaveClick }">Confirmar Asistencia</a>
         </ul>
     </form>
 </div>
